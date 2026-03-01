@@ -9,8 +9,8 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  }),
+    transition: { delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const }
+  })
 };
 
 const serviceIcons: Record<string, React.ReactNode> = {
@@ -19,7 +19,7 @@ const serviceIcons: Record<string, React.ReactNode> = {
   Lock: <Lock size={28} />,
   Users: <Users size={28} />,
   Building: <Building2 size={28} />,
-  Megaphone: <Megaphone size={28} />,
+  Megaphone: <Megaphone size={28} />
 };
 
 const Index = () => {
@@ -36,10 +36,10 @@ const Index = () => {
           <motion.div
             initial="hidden"
             animate="visible"
-            className="max-w-3xl"
-          >
-            <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">
-              Every compliance requirement, handled. So you can focus on the healing.
+            className="max-w-3xl">
+
+            <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">You Heal.
+We handle everything else.
             </motion.h1>
             <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">
               PsyComply covers the full operational and legal foundation of your psychedelic practice or business — from day one.
@@ -63,16 +63,16 @@ const Index = () => {
         <div className="section-padding py-6">
           <div className="container-wide flex flex-wrap justify-center gap-x-10 gap-y-3 text-sm font-sans">
             {[
-              { icon: <MapPin size={16} />, text: "Oregon & Colorado Regulatory Expertise" },
-              { icon: <Leaf size={16} />, text: "Psilocybin, Ketamine & MDMA Protocols" },
-              { icon: <Scale size={16} />, text: "Legal, Clinical, HR & Operations" },
-              { icon: <CheckCircle size={16} />, text: "Built for Healers and Operators" },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-2 opacity-90">
+            { icon: <MapPin size={16} />, text: "Oregon & Colorado Regulatory Expertise" },
+            { icon: <Leaf size={16} />, text: "Psilocybin, Ketamine & MDMA Protocols" },
+            { icon: <Scale size={16} />, text: "Legal, Clinical, HR & Operations" },
+            { icon: <CheckCircle size={16} />, text: "Built for Healers and Operators" }].
+            map((item, i) =>
+            <div key={i} className="flex items-center gap-2 opacity-90">
                 {item.icon}
                 <span>{item.text}</span>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -93,18 +93,18 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { icon: <Scale size={24} />, label: "Legal Compliance" },
-              { icon: <Heart size={24} />, label: "Clinical Protocols" },
-              { icon: <Lock size={24} />, label: "Substance Management" },
-              { icon: <Users size={24} />, label: "Staff & HR" },
-              { icon: <Building2 size={24} />, label: "Business Operations" },
-              { icon: <Megaphone size={24} />, label: "Marketing Compliance" },
-            ].map((item, i) => (
-              <div key={i} className="bg-card border border-border rounded-lg p-5 flex flex-col items-center text-center gap-3">
+            { icon: <Scale size={24} />, label: "Legal Compliance" },
+            { icon: <Heart size={24} />, label: "Clinical Protocols" },
+            { icon: <Lock size={24} />, label: "Substance Management" },
+            { icon: <Users size={24} />, label: "Staff & HR" },
+            { icon: <Building2 size={24} />, label: "Business Operations" },
+            { icon: <Megaphone size={24} />, label: "Marketing Compliance" }].
+            map((item, i) =>
+            <div key={i} className="bg-card border border-border rounded-lg p-5 flex flex-col items-center text-center gap-3">
                 <div className="text-primary">{item.icon}</div>
                 <span className="font-sans text-sm font-medium text-foreground">{item.label}</span>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -118,8 +118,8 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-background border border-border rounded-xl p-8 lg:p-10"
-            >
+              className="bg-background border border-border rounded-xl p-8 lg:p-10">
+
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6">
                 <Heart size={24} className="text-primary" />
               </div>
@@ -136,8 +136,8 @@ const Index = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.15 }}
-              className="bg-background border border-border rounded-xl p-8 lg:p-10"
-            >
+              className="bg-background border border-border rounded-xl p-8 lg:p-10">
+
               <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-6">
                 <Building2 size={24} className="text-accent" />
               </div>
@@ -161,18 +161,18 @@ const Index = () => {
             Six areas of compliance and operational support. Everything your psychedelic business needs to operate legally and professionally.
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, i) => (
-              <motion.div
-                key={service.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-              >
+            {services.map((service, i) =>
+            <motion.div
+              key={service.slug}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}>
+
                 <Link
-                  to={`/services/${service.slug}`}
-                  className="block bg-card border border-border rounded-xl p-7 hover:border-primary/30 hover:shadow-md transition-all h-full group"
-                >
+                to={`/services/${service.slug}`}
+                className="block bg-card border border-border rounded-xl p-7 hover:border-primary/30 hover:shadow-md transition-all h-full group">
+
                   <div className="text-primary mb-4">
                     {serviceIcons[service.icon]}
                   </div>
@@ -183,7 +183,7 @@ const Index = () => {
                   </span>
                 </Link>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -194,35 +194,35 @@ const Index = () => {
           <h2 className="heading-2 text-center mb-16">How it works</h2>
           <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
             {[
-              {
-                step: "01",
-                title: "Book a free discovery call",
-                description: "We learn your situation, your state, your substance, and your stage. Thirty minutes, no pressure.",
-              },
-              {
-                step: "02",
-                title: "We build your compliance plan",
-                description: "Either we do it for you, with you, or we hand you the exact documents you need. Your choice.",
-              },
-              {
-                step: "03",
-                title: "You operate with confidence",
-                description: "We stay available as your business grows and regulations change. You're never on your own.",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="text-center"
-              >
+            {
+              step: "01",
+              title: "Book a free discovery call",
+              description: "We learn your situation, your state, your substance, and your stage. Thirty minutes, no pressure."
+            },
+            {
+              step: "02",
+              title: "We build your compliance plan",
+              description: "Either we do it for you, with you, or we hand you the exact documents you need. Your choice."
+            },
+            {
+              step: "03",
+              title: "You operate with confidence",
+              description: "We stay available as your business grows and regulations change. You're never on your own."
+            }].
+            map((item, i) =>
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.15 }}
+              className="text-center">
+
                 <span className="font-serif text-5xl font-light text-gold">{item.step}</span>
                 <h3 className="font-serif text-xl font-medium mt-4 mb-3">{item.title}</h3>
                 <p className="body-sm opacity-80">{item.description}</p>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -237,18 +237,18 @@ const Index = () => {
             </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredAssets.map((asset, i) => (
-              <motion.div
-                key={asset.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-              >
+            {featuredAssets.map((asset, i) =>
+            <motion.div
+              key={asset.slug}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}>
+
                 <Link
-                  to={`/assets/${asset.slug}`}
-                  className="block bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all h-full"
-                >
+                to={`/assets/${asset.slug}`}
+                className="block bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all h-full">
+
                   <div className="flex gap-2 mb-3">
                     <span className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">{asset.category}</span>
                     <span className="text-xs font-sans font-medium bg-accent/20 text-accent-foreground px-2 py-1 rounded">{asset.state}</span>
@@ -260,7 +260,7 @@ const Index = () => {
                   </div>
                 </Link>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -273,25 +273,25 @@ const Index = () => {
             Psychedelic regulations vary significantly by state. Our resources are built for the rules where you actually operate.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {activeStates.map((state) => (
-              <Link
-                key={state.slug}
-                to={`/states/${state.slug}`}
-                className="bg-background border border-border rounded-lg p-5 text-center hover:border-primary/40 hover:shadow-sm transition-all"
-              >
+            {activeStates.map((state) =>
+            <Link
+              key={state.slug}
+              to={`/states/${state.slug}`}
+              className="bg-background border border-border rounded-lg p-5 text-center hover:border-primary/40 hover:shadow-sm transition-all">
+
                 <h3 className="font-serif text-lg font-medium text-foreground">{state.name}</h3>
                 <p className="text-xs font-sans text-muted-foreground mt-1">{state.substances.join(", ")}</p>
               </Link>
-            ))}
-            {comingSoonStates.map((state) => (
-              <div
-                key={state.slug}
-                className="bg-muted/50 border border-border/50 rounded-lg p-5 text-center opacity-60"
-              >
+            )}
+            {comingSoonStates.map((state) =>
+            <div
+              key={state.slug}
+              className="bg-muted/50 border border-border/50 rounded-lg p-5 text-center opacity-60">
+
                 <h3 className="font-serif text-lg font-medium text-foreground">{state.name}</h3>
                 <p className="text-xs font-sans text-muted-foreground mt-1">Coming soon</p>
               </div>
-            ))}
+            )}
           </div>
           <div className="text-center mt-8">
             <Link to="/states" className="font-sans text-sm font-medium text-primary hover:text-forest-light">
@@ -306,24 +306,24 @@ const Index = () => {
         <div className="container-wide">
           <h2 className="heading-2 text-foreground text-center mb-12">Built around the substance you work with</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {substances.map((substance, i) => (
-              <motion.div
-                key={substance.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
+            {substances.map((substance, i) =>
+            <motion.div
+              key={substance.slug}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}>
+
                 <Link
-                  to={`/substances/${substance.slug}`}
-                  className="block bg-card border border-border rounded-xl p-7 text-center hover:border-primary/30 hover:shadow-md transition-all h-full"
-                >
+                to={`/substances/${substance.slug}`}
+                className="block bg-card border border-border rounded-xl p-7 text-center hover:border-primary/30 hover:shadow-md transition-all h-full">
+
                   <Leaf size={28} className="text-primary mx-auto mb-4" />
                   <h3 className="heading-4 text-foreground mb-2">{substance.name}</h3>
                   <p className="body-sm text-muted-foreground">{Array.isArray(substance.states) ? substance.states.join(", ") : substance.states}</p>
                 </Link>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -333,15 +333,15 @@ const Index = () => {
         <div className="container-wide">
           <h2 className="heading-2 text-foreground text-center mb-12">What our clients say</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {testimonials.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-background border border-border rounded-xl p-8"
-              >
+            {testimonials.map((t, i) =>
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-background border border-border rounded-xl p-8">
+
                 <Star size={20} className="text-gold mb-4" />
                 <p className="body-base text-foreground italic mb-6">{t.quote}</p>
                 <div>
@@ -349,7 +349,7 @@ const Index = () => {
                   <p className="font-sans text-xs text-muted-foreground">{t.role}</p>
                 </div>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -384,8 +384,8 @@ const Index = () => {
           </Button>
         </div>
       </section>
-    </main>
-  );
+    </main>);
+
 };
 
 export default Index;
