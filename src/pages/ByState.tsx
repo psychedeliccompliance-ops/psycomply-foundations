@@ -1,0 +1,67 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { states } from "@/data/siteData";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+
+const ByState = () => {
+  const activeStates = states.filter((s) => s.active);
+  const comingSoonStates = states.filter((s) => !s.active);
+  const [emails, setEmails] = useState<Record<string, string>>({});
+
+  return (
+    <main className="pb-16 md:pb-0">
+      <section className="section-padding py-20 md:py-28">
+        <div className="container-wide max-w-3xl">
+          <h1 className="heading-1 text-foreground">State-specific compliance, covered</h1>
+          <p className="mt-6 body-lg text-muted-foreground">
+            Psychedelic regulations vary significantly by state. Our resources are built for the rules where you actually operate.
+          </p>
+        </div>
+      </section>
+
+      <section className="section-padding pb-24">
+        <div className="container-wide">
+          <h2 className="heading-3 text-foreground mb-8">Active states</h2>
+          <div className="grid md:grid-cols-2 gap-6 mb-16">
+            {activeStates.map((state) => (
+              <Link
+                key={state.slug}
+                to={`/states/${state.slug}`}
+                className="bg-card border border-border rounded-xl p-8 hover:border-primary/30 hover:shadow-md transition-all group"
+              >
+                <h3 className="heading-3 text-foreground mb-2">{state.name}</h3>
+                <p className="body-sm text-muted-foreground mb-4">Substances: {state.substances.join(", ")}</p>
+                <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
+                  View {state.name} resources <ArrowRight size={14} />
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          <h2 className="heading-3 text-foreground mb-8">Coming soon</h2>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {comingSoonStates.map((state) => (
+              <div key={state.slug} className="bg-muted/50 border border-border/50 rounded-xl p-6">
+                <h3 className="font-serif text-lg font-medium text-foreground mb-3">{state.name}</h3>
+                <p className="body-sm text-muted-foreground mb-3">Resources in development</p>
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="your@email.com"
+                    className="text-sm font-sans"
+                    value={emails[state.slug] || ""}
+                    onChange={(e) => setEmails({ ...emails, [state.slug]: e.target.value })}
+                  />
+                  <Button size="sm" variant="outline" className="font-sans text-xs shrink-0">Notify me</Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+};
+
+export default ByState;
