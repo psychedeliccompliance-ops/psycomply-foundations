@@ -68,7 +68,7 @@ const Index = () => {
             animate="visible"
             className="max-w-3xl">
 
-            <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">You Heal.
+            <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">You heal.
 We do paperwork.
             </motion.h1>
             <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">PsyComply covers the full operational and legal foundation of your psychedelic practice — from day one.
