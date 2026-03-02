@@ -65,6 +65,27 @@ export type Database = {
         }
         Relationships: []
       }
+      leads: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          state_slug: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          state_slug: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          state_slug?: string
+        }
+        Relationships: []
+      }
       states: {
         Row: {
           active: boolean

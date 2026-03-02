@@ -1,12 +1,18 @@
 import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import { services } from "@/data/siteData";
+import { toast } from "@/hooks/use-toast";
 
 const StatePage = () => {
   const { slug } = useParams();
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const { data: state, isLoading } = useQuery({
     queryKey: ["state", slug],
@@ -19,7 +25,7 @@ const StatePage = () => {
 
   const { data: stateAssets = [] } = useQuery({
     queryKey: ["state-assets", state?.name],
-    enabled: !!state,
+    enabled: !!state && state.active,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("assets")
@@ -31,6 +37,28 @@ const StatePage = () => {
     },
   });
 
+  const { data: allSubstances = [] } = useQuery({
+    queryKey: ["substances"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("substances").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const handleNotify = async () => {
+    if (!email || !slug) return;
+    setSubmitting(true);
+    const { error } = await supabase.from("leads").insert({ email, state_slug: slug });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
+    } else {
+      toast({ title: "You're on the list!", description: `We'll notify you when ${state?.name} resources are ready.` });
+      setEmail("");
+    }
+  };
+
   if (isLoading) {
     return (
       <main className="section-padding section-spacing">
@@ -40,7 +68,7 @@ const StatePage = () => {
     );
   }
 
-  if (!state || !state.active) {
+  if (!state) {
     return (
       <main className="section-padding section-spacing text-center">
         <h1 className="heading-2 text-foreground">State not found</h1>
@@ -49,6 +77,81 @@ const StatePage = () => {
     );
   }
 
+  // Match substance names from this state to substance slugs
+  const linkedSubstances = allSubstances.filter((s) =>
+    state.substances.includes(s.name)
+  );
+
+  // === COMING SOON STATE ===
+  if (!state.active) {
+    return (
+      <main className="pb-16 md:pb-0">
+        <section className="section-padding py-16 md:py-24">
+          <div className="container-wide max-w-3xl">
+            <Link to="/states" className="font-sans text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 mb-6">
+              <ArrowLeft size={14} /> All states
+            </Link>
+            <h1 className="heading-1 text-foreground">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
+          </div>
+        </section>
+
+        {state.overview && (
+          <section className="section-padding pb-16">
+            <div className="container-wide max-w-3xl space-y-6">
+              <h2 className="heading-3 text-foreground">What's happening in {state.name}</h2>
+              <p className="body-base text-muted-foreground">{state.overview}</p>
+            </div>
+          </section>
+        )}
+
+        {state.licensing_info && (
+          <section className="section-padding pb-16">
+            <div className="container-wide max-w-3xl space-y-6">
+              <h2 className="heading-3 text-foreground">Regulatory outlook</h2>
+              <p className="body-base text-muted-foreground">{state.licensing_info}</p>
+            </div>
+          </section>
+        )}
+
+        <section className="section-padding pb-16 bg-card">
+          <div className="container-wide max-w-xl text-center py-12">
+            <h2 className="heading-3 text-foreground mb-4">Get notified</h2>
+            <p className="body-base text-muted-foreground mb-6">
+              We're building {state.name}-specific compliance resources. Enter your email and we'll let you know when they're ready.
+            </p>
+            <div className="flex gap-3 max-w-md mx-auto">
+              <Input
+                placeholder="your@email.com"
+                className="font-sans"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Button
+                onClick={handleNotify}
+                disabled={submitting || !email}
+                className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans shrink-0"
+              >
+                {submitting ? "Saving…" : "Notify me"}
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-padding section-spacing text-center">
+          <div className="container-narrow">
+            <h2 className="heading-3 text-foreground mb-4">Need guidance now?</h2>
+            <p className="body-base text-muted-foreground mb-8">Even before state-specific resources are ready, we can help you plan ahead.</p>
+            <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans px-10">
+              <Link to="/contact">Book a Free Discovery Call</Link>
+            </Button>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  // === ACTIVE STATE ===
   return (
     <main className="pb-16 md:pb-0">
       <section className="section-padding py-16 md:py-24">
@@ -56,7 +159,7 @@ const StatePage = () => {
           <Link to="/states" className="font-sans text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 mb-6">
             <ArrowLeft size={14} /> All states
           </Link>
-          <h1 className="heading-1 text-foreground">{state.name} Psychedelic Business Compliance</h1>
+          <h1 className="heading-1 text-foreground">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
           <p className="mt-4 body-sm text-muted-foreground">Substances covered: {state.substances.join(", ")}</p>
         </div>
       </section>
@@ -70,34 +173,83 @@ const StatePage = () => {
         </div>
       </section>
 
-      <section className="section-padding section-spacing bg-card">
+      {/* Substances */}
+      {linkedSubstances.length > 0 && (
+        <section className="section-padding pb-16">
+          <div className="container-wide max-w-3xl">
+            <h2 className="heading-3 text-foreground mb-6">Substances available in {state.name}</h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {linkedSubstances.map((sub) => (
+                <Link
+                  key={sub.slug}
+                  to={`/substances/${sub.slug}`}
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
+                >
+                  <h3 className="font-serif text-lg font-medium text-foreground mb-2">{sub.name}</h3>
+                  <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
+                    View {sub.name} resources <ArrowRight size={14} />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Assets */}
+      {stateAssets.length > 0 && (
+        <section className="section-padding section-spacing bg-card">
+          <div className="container-wide">
+            <h2 className="heading-3 text-foreground mb-8">Available resources for {state.name}</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {stateAssets.map((asset) => (
+                <Link
+                  key={asset.slug}
+                  to={`/assets/${asset.slug}`}
+                  className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 transition-all"
+                >
+                  <div className="flex gap-2 mb-3">
+                    <span className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">{asset.category}</span>
+                    <span className="text-xs font-sans font-medium bg-accent/20 text-accent-foreground px-2 py-1 rounded">{asset.substance}</span>
+                  </div>
+                  <h3 className="font-serif text-lg font-medium text-foreground mb-2">{asset.title}</h3>
+                  <span className="font-sans font-semibold text-foreground">${asset.price}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Services */}
+      <section className="section-padding section-spacing">
         <div className="container-wide">
-          <h2 className="heading-3 text-foreground mb-8">Available resources for {state.name}</h2>
+          <h2 className="heading-3 text-foreground mb-8">Services for {state.name} businesses</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {stateAssets.map((asset) => (
+            {services.map((service) => (
               <Link
-                key={asset.slug}
-                to={`/assets/${asset.slug}`}
-                className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 transition-all"
+                key={service.slug}
+                to={`/services/${service.slug}`}
+                className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-all group"
               >
-                <div className="flex gap-2 mb-3">
-                  <span className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">{asset.category}</span>
-                  <span className="text-xs font-sans font-medium bg-accent/20 text-accent-foreground px-2 py-1 rounded">{asset.substance}</span>
-                </div>
-                <h3 className="font-serif text-lg font-medium text-foreground mb-2">{asset.title}</h3>
-                <span className="font-sans font-semibold text-foreground">${asset.price}</span>
+                <h3 className="font-serif text-lg font-medium text-foreground mb-2">{service.title}</h3>
+                <p className="body-sm text-muted-foreground mb-4 line-clamp-3">{service.shortDescription}</p>
+                <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
+                  Learn more <ArrowRight size={14} />
+                </span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
+      {/* CTA */}
       <section className="section-padding section-spacing text-center">
         <div className="container-narrow">
           <h2 className="heading-3 text-foreground mb-4">Need {state.name}-specific guidance?</h2>
           <p className="body-base text-muted-foreground mb-8">We know the rules. Let's talk about your situation.</p>
           <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans px-10">
-            <Link to="/book">Book a Free Discovery Call</Link>
+            <Link to="/contact">Book a Free Discovery Call</Link>
           </Button>
         </div>
       </section>
