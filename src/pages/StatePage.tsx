@@ -108,7 +108,7 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
           <div className="container-wide">
             <h2 className="heading-3 text-foreground mb-3 text-center">Substances We Cover in {state.name}</h2>
             <p className="body-base text-muted-foreground mb-8 text-center">Select a substance for detailed compliance resources.</p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {linkedSubstances.map((sub) => (
                 <Link
                   key={sub.slug}
@@ -258,7 +258,7 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
           <div className="container-wide">
             <h2 className="heading-3 text-foreground mb-3 text-center">Substances We Cover in {state.name}</h2>
             <p className="body-base text-muted-foreground mb-8 text-center">Select a substance for detailed compliance resources.</p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {linkedSubstances.map((sub) => (
                 <Link
                   key={sub.slug}
