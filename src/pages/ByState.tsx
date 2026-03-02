@@ -88,6 +88,7 @@ interface ComingSoonCardProps {
     slug: string;
     name: string;
     overview: string;
+    substances: string[];
   };
 }
 
@@ -116,6 +117,13 @@ const ComingSoonCard = ({ state }: ComingSoonCardProps) => {
   return (
     <div className="bg-card border border-border rounded-xl p-6 flex flex-col">
       <h3 className="font-serif text-lg font-medium text-foreground mb-2">{state.name}</h3>
+      <div className="flex flex-wrap gap-2 mb-3">
+        {state.substances.map((sub) => (
+          <span key={sub} className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">
+            {sub}
+          </span>
+        ))}
+      </div>
       <p className="body-sm text-muted-foreground mb-4 line-clamp-2">{teaser}</p>
       <form onSubmit={handleNotify} className="flex gap-2 mb-3">
         <Input
