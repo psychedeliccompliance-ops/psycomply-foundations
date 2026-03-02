@@ -254,6 +254,33 @@ const Index = () => {
         </div>
       </section>
 
+      {/* By Substance Teaser */}
+      <section className="section-padding section-spacing">
+        <div className="container-wide">
+          <h2 className="heading-2 text-foreground text-center mb-12">Built around the substance you work with</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {substances.map((substance, i) =>
+            <motion.div
+              key={substance.slug}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}>
+
+                <Link
+                to={`/substances/${substance.slug}`}
+                className="block bg-card border border-border rounded-xl p-7 text-center hover:border-primary/30 hover:shadow-md transition-all h-full">
+
+                  <Leaf size={28} className="text-primary mx-auto mb-4" />
+                  <h3 className="heading-4 text-foreground mb-2">{substance.name}</h3>
+                  <p className="body-sm text-muted-foreground">{substance.slug === 'ketamine' ? 'Available in all 50 states' : Array.isArray(substance.states) ? substance.states.join(", ") : substance.states}</p>
+                </Link>
+              </motion.div>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* By State Teaser */}
       <section className="section-padding section-spacing bg-card">
         <div className="container-wide">
@@ -322,33 +349,6 @@ const Index = () => {
                     <span className="font-sans font-semibold text-foreground">${asset.price}</span>
                     <span className="font-sans text-sm text-primary font-medium">Get it</span>
                   </div>
-                </Link>
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* By Substance Teaser */}
-      <section className="section-padding section-spacing">
-        <div className="container-wide">
-          <h2 className="heading-2 text-foreground text-center mb-12">Built around the substance you work with</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {substances.map((substance, i) =>
-            <motion.div
-              key={substance.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}>
-
-                <Link
-                to={`/substances/${substance.slug}`}
-                className="block bg-card border border-border rounded-xl p-7 text-center hover:border-primary/30 hover:shadow-md transition-all h-full">
-
-                  <Leaf size={28} className="text-primary mx-auto mb-4" />
-                  <h3 className="heading-4 text-foreground mb-2">{substance.name}</h3>
-                  <p className="body-sm text-muted-foreground">{substance.slug === 'ketamine' ? 'Available in all 50 states' : Array.isArray(substance.states) ? substance.states.join(", ") : substance.states}</p>
                 </Link>
               </motion.div>
             )}
