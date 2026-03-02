@@ -311,13 +311,14 @@ const Index = () => {
               </Link>
             )}
             {comingSoonStates.map((state) =>
-            <div
+            <Link
               key={state.slug}
-              className="bg-muted/50 border border-border/50 rounded-lg p-5 text-center opacity-60">
+              to={`/states/${state.slug}`}
+              className="bg-muted/50 border border-border/50 rounded-lg p-5 text-center opacity-60 hover:opacity-80 hover:border-primary/30 transition-all">
 
                 <h3 className="font-serif text-lg font-medium text-foreground">{state.name}</h3>
                 <p className="text-xs font-sans text-muted-foreground mt-1">Coming soon</p>
-              </div>
+              </Link>
             )}
           </div>
           <div className="text-center mt-8">
