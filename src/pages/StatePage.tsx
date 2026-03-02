@@ -1,11 +1,44 @@
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { states, assets } from "@/data/siteData";
 import { ArrowLeft } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const StatePage = () => {
   const { slug } = useParams();
-  const state = states.find((s) => s.slug === slug);
+
+  const { data: state, isLoading } = useQuery({
+    queryKey: ["state", slug],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("states").select("*").eq("slug", slug!).maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: stateAssets = [] } = useQuery({
+    queryKey: ["state-assets", state?.name],
+    enabled: !!state,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("assets")
+        .select("*")
+        .eq("is_bundle", false)
+        .or(`state.eq.${state!.name},state.eq.All States`);
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <main className="section-padding section-spacing">
+        <Skeleton className="h-12 w-64 mb-4" />
+        <Skeleton className="h-64 w-full" />
+      </main>
+    );
+  }
 
   if (!state || !state.active) {
     return (
@@ -15,8 +48,6 @@ const StatePage = () => {
       </main>
     );
   }
-
-  const stateAssets = assets.filter((a) => a.state === state.name || a.state === "All States").filter((a) => !a.isBundle);
 
   return (
     <main className="pb-16 md:pb-0">
@@ -35,11 +66,10 @@ const StatePage = () => {
           <h2 className="heading-3 text-foreground">Regulatory overview</h2>
           <p className="body-base text-muted-foreground">{state.overview}</p>
           <h2 className="heading-3 text-foreground mt-10">Licensing and requirements</h2>
-          <p className="body-base text-muted-foreground">{state.licensingInfo}</p>
+          <p className="body-base text-muted-foreground">{state.licensing_info}</p>
         </div>
       </section>
 
-      {/* Assets for this state */}
       <section className="section-padding section-spacing bg-card">
         <div className="container-wide">
           <h2 className="heading-3 text-foreground mb-8">Available resources for {state.name}</h2>

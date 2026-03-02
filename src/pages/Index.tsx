@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Scale, Heart, Lock, Users, Building2, Megaphone, ArrowRight, CheckCircle, Leaf, MapPin, Star } from "lucide-react";
-import { services, assets, states, substances, testimonials } from "@/data/siteData";
+import { services, testimonials } from "@/data/siteData";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -23,7 +26,34 @@ const serviceIcons: Record<string, React.ReactNode> = {
 };
 
 const Index = () => {
-  const featuredAssets = assets.filter((a) => !a.isBundle).slice(0, 4);
+  const { data: assets = [] } = useQuery({
+    queryKey: ["assets"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("assets").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: states = [] } = useQuery({
+    queryKey: ["states"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("states").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: substances = [] } = useQuery({
+    queryKey: ["substances"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("substances").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const featuredAssets = assets.filter((a) => !a.is_bundle).slice(0, 4);
   const activeStates = states.filter((s) => s.active);
   const comingSoonStates = states.filter((s) => !s.active);
 
@@ -53,7 +83,6 @@ We handle everything else.
               </Button>
             </motion.div>
           </motion.div>
-          {/* Subtle decorative element */}
           <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl hidden lg:block" />
         </div>
       </section>

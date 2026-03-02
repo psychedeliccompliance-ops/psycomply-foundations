@@ -1,11 +1,49 @@
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { assets } from "@/data/siteData";
 import { ArrowLeft, Download } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const AssetDetail = () => {
   const { slug } = useParams();
-  const asset = assets.find((a) => a.slug === slug);
+
+  const { data: asset, isLoading } = useQuery({
+    queryKey: ["asset", slug],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("assets").select("*").eq("slug", slug!).maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: relatedAssets = [] } = useQuery({
+    queryKey: ["related-assets", slug, asset?.category, asset?.substance],
+    enabled: !!asset,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("assets")
+        .select("*")
+        .neq("slug", slug!)
+        .eq("is_bundle", false)
+        .or(`category.eq.${asset!.category},substance.eq.${asset!.substance}`)
+        .limit(3);
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <main className="section-padding section-spacing">
+        <div className="container-wide max-w-4xl">
+          <Skeleton className="h-8 w-48 mb-6" />
+          <Skeleton className="h-12 w-full mb-4" />
+          <Skeleton className="h-64 w-full" />
+        </div>
+      </main>
+    );
+  }
 
   if (!asset) {
     return (
@@ -16,8 +54,6 @@ const AssetDetail = () => {
     );
   }
 
-  const relatedAssets = assets.filter((a) => a.slug !== asset.slug && !a.isBundle && (a.category === asset.category || a.substance === asset.substance)).slice(0, 3);
-
   return (
     <main className="pb-16 md:pb-0">
       <section className="section-padding py-16 md:py-24">
@@ -27,13 +63,12 @@ const AssetDetail = () => {
           </Link>
 
           <div className="grid md:grid-cols-3 gap-12">
-            {/* Main content */}
             <div className="md:col-span-2">
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">{asset.category}</span>
                 <span className="text-xs font-sans font-medium bg-accent/20 text-accent-foreground px-2 py-1 rounded">{asset.state}</span>
                 <span className="text-xs font-sans font-medium bg-muted text-muted-foreground px-2 py-1 rounded">{asset.substance}</span>
-                {asset.isBundle && <span className="text-xs font-sans font-medium bg-gold/20 text-gold-foreground px-2 py-1 rounded">Bundle</span>}
+                {asset.is_bundle && <span className="text-xs font-sans font-medium bg-gold/20 text-gold-foreground px-2 py-1 rounded">Bundle</span>}
               </div>
               <h1 className="heading-2 text-foreground mb-6">{asset.title}</h1>
               <div className="space-y-6">
@@ -43,12 +78,12 @@ const AssetDetail = () => {
                 </div>
                 <div>
                   <h2 className="font-sans font-semibold text-foreground mb-2">Why you need it</h2>
-                  <p className="body-base text-muted-foreground">{asset.whyYouNeed}</p>
+                  <p className="body-base text-muted-foreground">{asset.why_you_need}</p>
                 </div>
-                {asset.isBundle && asset.bundleContents && (
+                {asset.is_bundle && asset.bundle_contents && (
                   <div>
                     <h2 className="font-sans font-semibold text-foreground mb-2">What's included</h2>
-                    <p className="body-base text-muted-foreground">{asset.bundleContents}</p>
+                    <p className="body-base text-muted-foreground">{asset.bundle_contents}</p>
                   </div>
                 )}
                 <div>
@@ -58,12 +93,11 @@ const AssetDetail = () => {
               </div>
             </div>
 
-            {/* Sidebar */}
             <div className="md:col-span-1">
               <div className="bg-card border border-border rounded-xl p-8 sticky top-28">
                 <div className="text-center mb-6">
-                  {asset.isBundle && asset.bundleValue && (
-                    <p className="font-sans text-sm text-muted-foreground line-through mb-1">${asset.bundleValue} value</p>
+                  {asset.is_bundle && asset.bundle_value && (
+                    <p className="font-sans text-sm text-muted-foreground line-through mb-1">${asset.bundle_value} value</p>
                   )}
                   <p className="font-sans text-3xl font-bold text-foreground">${asset.price}</p>
                 </div>
@@ -78,7 +112,6 @@ const AssetDetail = () => {
         </div>
       </section>
 
-      {/* Related */}
       {relatedAssets.length > 0 && (
         <section className="section-padding section-spacing bg-card">
           <div className="container-wide max-w-4xl">

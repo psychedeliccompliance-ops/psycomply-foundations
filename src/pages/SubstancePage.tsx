@@ -1,11 +1,44 @@
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { substances, assets } from "@/data/siteData";
 import { ArrowLeft } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const SubstancePage = () => {
   const { slug } = useParams();
-  const substance = substances.find((s) => s.slug === slug);
+
+  const { data: substance, isLoading } = useQuery({
+    queryKey: ["substance", slug],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("substances").select("*").eq("slug", slug!).maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: substanceAssets = [] } = useQuery({
+    queryKey: ["substance-assets", substance?.name],
+    enabled: !!substance,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("assets")
+        .select("*")
+        .eq("is_bundle", false)
+        .or(`substance.eq.${substance!.name},substance.eq.All`);
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <main className="section-padding section-spacing">
+        <Skeleton className="h-12 w-64 mb-4" />
+        <Skeleton className="h-64 w-full" />
+      </main>
+    );
+  }
 
   if (!substance) {
     return (
@@ -15,8 +48,6 @@ const SubstancePage = () => {
       </main>
     );
   }
-
-  const substanceAssets = assets.filter((a) => a.substance === substance.name || a.substance === "All").filter((a) => !a.isBundle);
 
   return (
     <main className="pb-16 md:pb-0">
@@ -33,7 +64,7 @@ const SubstancePage = () => {
         <div className="container-wide max-w-3xl space-y-8">
           <div>
             <h2 className="heading-3 text-foreground mb-4">Legal status</h2>
-            <p className="body-base text-muted-foreground">{substance.legalStatus}</p>
+            <p className="body-base text-muted-foreground">{substance.legal_status}</p>
           </div>
           <div>
             <h2 className="heading-3 text-foreground mb-4">About {substance.name}</h2>
@@ -41,7 +72,7 @@ const SubstancePage = () => {
           </div>
           <div>
             <h2 className="heading-3 text-foreground mb-4">Clinical and operational requirements</h2>
-            <p className="body-base text-muted-foreground">{substance.clinicalRequirements}</p>
+            <p className="body-base text-muted-foreground">{substance.clinical_requirements}</p>
           </div>
         </div>
       </section>
