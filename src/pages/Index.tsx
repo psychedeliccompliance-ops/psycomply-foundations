@@ -32,7 +32,7 @@ const Index = () => {
       const { data, error } = await supabase.from("assets").select("*");
       if (error) throw error;
       return data;
-    },
+    }
   });
 
   const { data: states = [] } = useQuery({
@@ -41,7 +41,7 @@ const Index = () => {
       const { data, error } = await supabase.from("states").select("*");
       if (error) throw error;
       return data;
-    },
+    }
   });
 
   const { data: substances = [] } = useQuery({
@@ -50,7 +50,7 @@ const Index = () => {
       const { data, error } = await supabase.from("substances").select("*");
       if (error) throw error;
       return data;
-    },
+    }
   });
 
   const featuredAssets = assets.filter((a) => !a.is_bundle).slice(0, 4);
@@ -69,10 +69,10 @@ const Index = () => {
             className="max-w-3xl">
 
             <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">You Heal.
-We handle everything else.
+We do paperwork.
             </motion.h1>
-            <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">
-              PsyComply covers the full operational and legal foundation of your psychedelic practice or business — from day one.
+            <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">PsyComply covers the full operational and legal foundation of your psychedelic practice — from day one.
+
             </motion.p>
             <motion.div variants={fadeUp} custom={2} className="mt-10 flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
