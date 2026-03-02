@@ -81,6 +81,29 @@ const SubstancePage = () => {
         </div>
       </section>
 
+      {/* Services */}
+      <section className="section-padding section-spacing bg-card">
+        <div className="container-wide">
+          <h2 className="heading-3 text-foreground mb-3">Our Services for {substance.name} Practices</h2>
+          <p className="body-base text-muted-foreground mb-8">Six areas of compliance, tailored for {substance.name}.</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service) => (
+              <Link
+                key={service.slug}
+                to={`/services/${service.slug}`}
+                className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 transition-all group"
+              >
+                <h3 className="font-serif text-lg font-medium text-foreground mb-2">{service.title}</h3>
+                <p className="body-sm text-muted-foreground mb-4 line-clamp-3">{service.shortDescription}</p>
+                <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
+                  Learn more <ArrowRight size={14} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Legal & Description */}
       <section className="section-padding section-spacing">
         <div className="container-wide max-w-3xl space-y-8">
@@ -130,32 +153,9 @@ const SubstancePage = () => {
         </section>
       )}
 
-      {/* Services */}
-      <section className="section-padding section-spacing">
-        <div className="container-wide">
-          <h2 className="heading-3 text-foreground mb-3">Our Services for {substance.name} Practices</h2>
-          <p className="body-base text-muted-foreground mb-8">Six areas of compliance, tailored for {substance.name}.</p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service) => (
-              <Link
-                key={service.slug}
-                to={`/services/${service.slug}`}
-                className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-all group"
-              >
-                <h3 className="font-serif text-lg font-medium text-foreground mb-2">{service.title}</h3>
-                <p className="body-sm text-muted-foreground mb-4 line-clamp-3">{service.shortDescription}</p>
-                <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
-                  Learn more <ArrowRight size={14} />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Assets */}
       {substanceAssets.length > 0 && (
-        <section className="section-padding section-spacing bg-card">
+        <section className="section-padding section-spacing">
           <div className="container-wide">
             <h2 className="heading-3 text-foreground mb-8">Resources for {substance.name}</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -163,7 +163,7 @@ const SubstancePage = () => {
                 <Link
                   key={asset.slug}
                   to={`/assets/${asset.slug}`}
-                  className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 transition-all"
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-all"
                 >
                   <div className="flex gap-2 mb-3">
                     <span className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">{asset.category}</span>

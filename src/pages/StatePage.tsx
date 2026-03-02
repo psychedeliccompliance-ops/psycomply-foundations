@@ -102,12 +102,27 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
         </div>
       </section>
 
-      {/* Overview */}
-      {state.overview && (
+      {/* Substances */}
+      {linkedSubstances.length > 0 && (
         <section className="section-padding section-spacing">
-          <div className="container-wide max-w-3xl">
-            <h2 className="heading-3 text-foreground mb-4">Regulatory overview</h2>
-            <p className="body-base text-muted-foreground">{state.overview}</p>
+          <div className="container-wide">
+            <h2 className="heading-3 text-foreground mb-3">Substances We Cover in {state.name}</h2>
+            <p className="body-base text-muted-foreground mb-8">Select a substance for detailed compliance resources.</p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {linkedSubstances.map((sub) => (
+                <Link
+                  key={sub.slug}
+                  to={`/substances/${sub.slug}`}
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
+                >
+                  <h3 className="font-serif text-lg font-medium text-foreground mb-2">{sub.name}</h3>
+                  <p className="body-sm text-muted-foreground mb-4 line-clamp-2">{sub.legal_status?.split(".")[0]}.</p>
+                  <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
+                    View {sub.name} resources <ArrowRight size={14} />
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -135,34 +150,9 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
         </div>
       </section>
 
-      {/* Substances */}
-      {linkedSubstances.length > 0 && (
-        <section className="section-padding section-spacing">
-          <div className="container-wide">
-            <h2 className="heading-3 text-foreground mb-3">Substances We Cover in {state.name}</h2>
-            <p className="body-base text-muted-foreground mb-8">Select a substance for detailed compliance resources.</p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {linkedSubstances.map((sub) => (
-                <Link
-                  key={sub.slug}
-                  to={`/substances/${sub.slug}`}
-                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
-                >
-                  <h3 className="font-serif text-lg font-medium text-foreground mb-2">{sub.name}</h3>
-                  <p className="body-sm text-muted-foreground mb-4 line-clamp-2">{sub.legal_status?.split(".")[0]}.</p>
-                  <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
-                    View {sub.name} resources <ArrowRight size={14} />
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Assets */}
       {stateAssets.length > 0 && (
-        <section className="section-padding section-spacing bg-card">
+        <section className="section-padding section-spacing">
           <div className="container-wide">
             <h2 className="heading-3 text-foreground mb-8">Resources for {state.name}</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -170,7 +160,7 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
                 <Link
                   key={asset.slug}
                   to={`/assets/${asset.slug}`}
-                  className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 transition-all"
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-all"
                 >
                   <div className="flex gap-2 mb-3">
                     <span className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">{asset.category}</span>
@@ -181,6 +171,16 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* Overview */}
+      {state.overview && (
+        <section className="section-padding section-spacing bg-card">
+          <div className="container-wide max-w-3xl">
+            <h2 className="heading-3 text-foreground mb-4">Regulatory overview</h2>
+            <p className="body-base text-muted-foreground">{state.overview}</p>
           </div>
         </section>
       )}
@@ -203,6 +203,19 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
 const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }) => {
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  const { data: allSubstances = [] } = useQuery({
+    queryKey: ["substances"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("substances").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const linkedSubstances = allSubstances.filter((s) =>
+    state.substances.includes(s.name)
+  );
 
   const handleNotify = async () => {
     if (!email) return;
@@ -236,6 +249,54 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Substances */}
+      {linkedSubstances.length > 0 && (
+        <section className="section-padding section-spacing">
+          <div className="container-wide">
+            <h2 className="heading-3 text-foreground mb-3">Substances We Cover in {state.name}</h2>
+            <p className="body-base text-muted-foreground mb-8">Select a substance for detailed compliance resources.</p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {linkedSubstances.map((sub) => (
+                <Link
+                  key={sub.slug}
+                  to={`/substances/${sub.slug}`}
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
+                >
+                  <h3 className="font-serif text-lg font-medium text-foreground mb-2">{sub.name}</h3>
+                  <p className="body-sm text-muted-foreground mb-4 line-clamp-2">{sub.legal_status?.split(".")[0]}.</p>
+                  <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
+                    View {sub.name} resources <ArrowRight size={14} />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Services */}
+      <section className="section-padding section-spacing bg-card">
+        <div className="container-wide">
+          <h2 className="heading-3 text-foreground mb-3">Our Services in {state.name}</h2>
+          <p className="body-base text-muted-foreground mb-8">Six areas of compliance, tailored for {state.name}'s regulatory landscape.</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service) => (
+              <Link
+                key={service.slug}
+                to={`/services/${service.slug}`}
+                className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
+              >
+                <h3 className="font-serif text-lg font-medium text-foreground mb-2">{service.title}</h3>
+                <p className="body-sm text-muted-foreground mb-4 line-clamp-3">{service.shortDescription}</p>
+                <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
+                  Learn more <ArrowRight size={14} />
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
