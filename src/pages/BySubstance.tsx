@@ -8,7 +8,7 @@ const BySubstance = () => {
   const { data: substances = [] } = useQuery({
     queryKey: ["substances"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("substances").select("*");
+      const { data, error } = await supabase.from("substances").select("*").order("name");
       if (error) throw error;
       return data;
     },
@@ -20,29 +20,31 @@ const BySubstance = () => {
         <div className="container-wide max-w-3xl">
           <h1 className="heading-1 text-foreground">Compliance built around your substance</h1>
           <p className="mt-6 body-lg text-muted-foreground">
-            Each substance has its own regulatory requirements, clinical protocols, and legal considerations. We build for the specifics.
+            Select your substance to see state availability and resources.
           </p>
         </div>
       </section>
 
       <section className="section-padding pb-24">
-        <div className="container-wide grid sm:grid-cols-2 gap-8 max-w-4xl">
+        <div className="container-wide grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {substances.map((substance, i) => (
             <motion.div
               key={substance.slug}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.08 }}
             >
               <Link
                 to={`/substances/${substance.slug}`}
                 className="block bg-card border border-border rounded-xl p-8 hover:border-primary/30 hover:shadow-md transition-all h-full group"
               >
                 <Leaf size={28} className="text-primary mb-4" />
-                <h2 className="heading-3 text-foreground mb-3">{substance.name}</h2>
-                <p className="body-sm text-muted-foreground mb-2">{substance.legal_status.split(".")[0]}.</p>
-                <p className="body-sm text-muted-foreground mb-4">States: {Array.isArray(substance.states) ? substance.states.join(", ") : substance.states}</p>
+                <h2 className="heading-4 text-foreground mb-3">{substance.name}</h2>
+                <p className="body-sm text-muted-foreground mb-2 line-clamp-2">{substance.legal_status.split(".")[0]}.</p>
+                <p className="body-sm text-muted-foreground mb-4">
+                  States: {Array.isArray(substance.states) ? substance.states.join(", ") : substance.states}
+                </p>
                 <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
                   View details <ArrowRight size={14} />
                 </span>
