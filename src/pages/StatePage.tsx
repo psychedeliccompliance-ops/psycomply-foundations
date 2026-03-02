@@ -227,6 +227,15 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
           </Link>
           <h1 className="heading-1 text-foreground">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
           <p className="mt-2 body-lg text-gold font-sans font-medium">Coming Soon</p>
+          {state.substances.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-4">
+              {state.substances.map((sub) => (
+                <span key={sub} className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">
+                  {sub}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
