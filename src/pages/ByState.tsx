@@ -1,14 +1,9 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
 const ByState = () => {
-  const [emails, setEmails] = useState<Record<string, string>>({});
-
   const { data: states = [] } = useQuery({
     queryKey: ["states"],
     queryFn: async () => {
@@ -54,19 +49,17 @@ const ByState = () => {
           <h2 className="heading-3 text-foreground mb-8">Coming soon</h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {comingSoonStates.map((state) => (
-              <div key={state.slug} className="bg-muted/50 border border-border/50 rounded-xl p-6">
+              <Link
+                key={state.slug}
+                to={`/states/${state.slug}`}
+                className="bg-muted/50 border border-border/50 rounded-xl p-6 hover:border-primary/30 transition-all group"
+              >
                 <h3 className="font-serif text-lg font-medium text-foreground mb-3">{state.name}</h3>
                 <p className="body-sm text-muted-foreground mb-3">Resources in development</p>
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="your@email.com"
-                    className="text-sm font-sans"
-                    value={emails[state.slug] || ""}
-                    onChange={(e) => setEmails({ ...emails, [state.slug]: e.target.value })}
-                  />
-                  <Button size="sm" variant="outline" className="font-sans text-xs shrink-0">Notify me</Button>
-                </div>
-              </div>
+                <span className="font-sans text-sm font-medium text-primary group-hover:text-forest-light flex items-center gap-1">
+                  View details <ArrowRight size={14} />
+                </span>
+              </Link>
             ))}
           </div>
         </div>
