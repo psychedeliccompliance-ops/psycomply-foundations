@@ -254,6 +254,43 @@ const Index = () => {
         </div>
       </section>
 
+      {/* By State Teaser */}
+      <section className="section-padding section-spacing bg-card">
+        <div className="container-wide">
+          <h2 className="heading-2 text-foreground text-center mb-4">We know the rules in your state</h2>
+          <p className="body-base text-muted-foreground text-center max-w-2xl mx-auto mb-12">
+            Psychedelic regulations vary significantly by state. Our resources are built for the rules where you actually operate.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {activeStates.map((state) =>
+            <Link
+              key={state.slug}
+              to={`/states/${state.slug}`}
+              className="bg-background border border-border rounded-lg p-5 text-center hover:border-primary/40 hover:shadow-sm transition-all">
+
+                <h3 className="font-serif text-lg font-medium text-foreground">{state.name}</h3>
+                <p className="text-xs font-sans text-muted-foreground mt-1">{state.substances.join(", ")}</p>
+              </Link>
+            )}
+            {comingSoonStates.map((state) =>
+            <Link
+              key={state.slug}
+              to={`/states/${state.slug}`}
+              className="bg-background border border-border rounded-lg p-5 text-center hover:border-primary/40 hover:shadow-sm transition-all">
+
+                <h3 className="font-serif text-lg font-medium text-foreground">{state.name}</h3>
+                <p className="text-xs font-sans text-muted-foreground mt-1">{state.substances.join(", ")}</p>
+              </Link>
+            )}
+          </div>
+          <div className="text-center mt-8">
+            <Link to="/states" className="font-sans text-sm font-medium text-primary hover:text-forest-light">
+              View all states →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Assets */}
       <section className="section-padding section-spacing">
         <div className="container-wide">
@@ -288,43 +325,6 @@ const Index = () => {
                 </Link>
               </motion.div>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* By State Teaser */}
-      <section className="section-padding section-spacing bg-card">
-        <div className="container-wide">
-          <h2 className="heading-2 text-foreground text-center mb-4">We know the rules in your state</h2>
-          <p className="body-base text-muted-foreground text-center max-w-2xl mx-auto mb-12">
-            Psychedelic regulations vary significantly by state. Our resources are built for the rules where you actually operate.
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {activeStates.map((state) =>
-            <Link
-              key={state.slug}
-              to={`/states/${state.slug}`}
-              className="bg-background border border-border rounded-lg p-5 text-center hover:border-primary/40 hover:shadow-sm transition-all">
-
-                <h3 className="font-serif text-lg font-medium text-foreground">{state.name}</h3>
-                <p className="text-xs font-sans text-muted-foreground mt-1">{state.substances.join(", ")}</p>
-              </Link>
-            )}
-            {comingSoonStates.map((state) =>
-            <Link
-              key={state.slug}
-              to={`/states/${state.slug}`}
-              className="bg-muted/50 border border-border/50 rounded-lg p-5 text-center opacity-60 hover:opacity-80 hover:border-primary/30 transition-all">
-
-                <h3 className="font-serif text-lg font-medium text-foreground">{state.name}</h3>
-                <p className="text-xs font-sans text-muted-foreground mt-1">Coming soon</p>
-              </Link>
-            )}
-          </div>
-          <div className="text-center mt-8">
-            <Link to="/states" className="font-sans text-sm font-medium text-primary hover:text-forest-light">
-              View all states →
-            </Link>
           </div>
         </div>
       </section>
