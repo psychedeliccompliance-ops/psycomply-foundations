@@ -349,7 +349,7 @@ We handle everything else.
 
                   <Leaf size={28} className="text-primary mx-auto mb-4" />
                   <h3 className="heading-4 text-foreground mb-2">{substance.name}</h3>
-                  <p className="body-sm text-muted-foreground">{Array.isArray(substance.states) ? substance.states.join(", ") : substance.states}</p>
+                  <p className="body-sm text-muted-foreground">{substance.slug === 'ketamine' ? 'Available in all 50 states' : Array.isArray(substance.states) ? substance.states.join(", ") : substance.states}</p>
                 </Link>
               </motion.div>
             )}

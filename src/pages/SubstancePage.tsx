@@ -60,7 +60,7 @@ const SubstancePage = () => {
   }
 
   const linkedStates = allStates.filter(
-    (s) => s.active && s.substances.includes(substance.name)
+    (s) => s.substances.includes(substance.name)
   );
 
   return (
