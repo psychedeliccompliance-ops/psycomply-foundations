@@ -1,11 +1,22 @@
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { services, assets } from "@/data/siteData";
+import { services } from "@/data/siteData";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 const ServiceDetail = () => {
   const { slug } = useParams();
   const service = services.find((s) => s.slug === slug);
+
+  const { data: relatedAssets = [] } = useQuery({
+    queryKey: ["related-assets-service"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("assets").select("*").eq("is_bundle", false).limit(3);
+      if (error) throw error;
+      return data;
+    },
+  });
 
   if (!service) {
     return (
@@ -15,8 +26,6 @@ const ServiceDetail = () => {
       </main>
     );
   }
-
-  const relatedAssets = assets.filter((a) => !a.isBundle).slice(0, 3);
 
   return (
     <main className="pb-16 md:pb-0">

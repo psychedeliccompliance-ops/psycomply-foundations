@@ -1,9 +1,10 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useMemo } from "react";
-import { assets } from "@/data/siteData";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 const categories = ["All", "Legal", "Clinical", "HR", "Controlled Substances", "Marketing", "Operations"];
 const stateOptions = ["All", "Oregon", "Colorado", "All States"];
@@ -22,6 +23,15 @@ const AssetLibrary = () => {
   const [substanceFilter, setSubstanceFilter] = useState(searchParams.get("substance") || "All");
   const [sort, setSort] = useState(searchParams.get("sort") || "newest");
 
+  const { data: assets = [] } = useQuery({
+    queryKey: ["assets"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("assets").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const updateFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
     if (value === "All") params.delete(key);
@@ -29,16 +39,16 @@ const AssetLibrary = () => {
     setSearchParams(params);
   };
 
-  const bundles = assets.filter((a) => a.isBundle);
+  const bundles = assets.filter((a) => a.is_bundle);
   const filteredAssets = useMemo(() => {
-    let result = assets.filter((a) => !a.isBundle);
+    let result = assets.filter((a) => !a.is_bundle);
     if (category !== "All") result = result.filter((a) => a.category === category);
     if (stateFilter !== "All") result = result.filter((a) => a.state === stateFilter || a.state === "All States");
     if (substanceFilter !== "All") result = result.filter((a) => a.substance === substanceFilter || a.substance === "All");
     if (sort === "price-low") result.sort((a, b) => a.price - b.price);
     if (sort === "price-high") result.sort((a, b) => b.price - a.price);
     return result;
-  }, [category, stateFilter, substanceFilter, sort]);
+  }, [assets, category, stateFilter, substanceFilter, sort]);
 
   return (
     <main className="pb-16 md:pb-0">
@@ -66,11 +76,11 @@ const AssetLibrary = () => {
                 >
                   <span className="text-xs font-sans font-medium bg-gold/20 text-gold px-2 py-1 rounded">Bundle</span>
                   <h3 className="font-serif text-2xl font-medium mt-4 mb-3">{bundle.title}</h3>
-                  <p className="body-sm opacity-80 mb-4">{bundle.bundleContents}</p>
+                  <p className="body-sm opacity-80 mb-4">{bundle.bundle_contents}</p>
                   <div className="flex items-center gap-4">
                     <span className="font-sans text-2xl font-bold">${bundle.price}</span>
-                    {bundle.bundleValue && (
-                      <span className="font-sans text-sm line-through opacity-50">${bundle.bundleValue} value</span>
+                    {bundle.bundle_value && (
+                      <span className="font-sans text-sm line-through opacity-50">${bundle.bundle_value} value</span>
                     )}
                   </div>
                 </Link>

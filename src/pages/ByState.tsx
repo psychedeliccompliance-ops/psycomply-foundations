@@ -1,14 +1,25 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { states } from "@/data/siteData";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 const ByState = () => {
+  const [emails, setEmails] = useState<Record<string, string>>({});
+
+  const { data: states = [] } = useQuery({
+    queryKey: ["states"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("states").select("*");
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const activeStates = states.filter((s) => s.active);
   const comingSoonStates = states.filter((s) => !s.active);
-  const [emails, setEmails] = useState<Record<string, string>>({});
 
   return (
     <main className="pb-16 md:pb-0">
