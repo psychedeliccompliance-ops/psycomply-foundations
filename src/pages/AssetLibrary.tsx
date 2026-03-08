@@ -26,8 +26,7 @@ const AssetLibrary = () => {
       const { data, error } = await supabase
         .from("assets")
         .select("*")
-        .eq("is_bundle", false)
-        .filter("is_active", "eq", true)
+        .eq("is_active", true)
         .order("state")
         .order("title");
       if (error) throw error;
