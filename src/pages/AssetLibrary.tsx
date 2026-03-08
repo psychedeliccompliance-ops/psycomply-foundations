@@ -27,7 +27,6 @@ const AssetLibrary = () => {
         .from("assets")
         .select("*")
         .eq("is_bundle", false)
-        .filter("is_active", "eq", true)
         .order("state")
         .order("title");
       if (error) throw error;
