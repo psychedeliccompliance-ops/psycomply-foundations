@@ -21,8 +21,10 @@ export type Database = {
           category: string
           created_at: string
           description: string
+          drive_link: string | null
           format: string
           id: string
+          is_active: boolean
           is_bundle: boolean
           price: number
           slug: string
@@ -37,8 +39,10 @@ export type Database = {
           category: string
           created_at?: string
           description?: string
+          drive_link?: string | null
           format?: string
           id?: string
+          is_active?: boolean
           is_bundle?: boolean
           price: number
           slug: string
@@ -53,8 +57,10 @@ export type Database = {
           category?: string
           created_at?: string
           description?: string
+          drive_link?: string | null
           format?: string
           id?: string
+          is_active?: boolean
           is_bundle?: boolean
           price?: number
           slug?: string
