@@ -46,9 +46,9 @@ const AssetLibrary = () => {
     },
   });
 
-  const categories = useMemo(() => ["All", ...Array.from(new Set(assets.map((a) => a.category))).sort()], [assets]);
-  const stateOptions = useMemo(() => ["All", ...Array.from(new Set(assets.map((a) => a.state))).sort()], [assets]);
-  const substanceOptions = useMemo(() => ["All", ...Array.from(new Set(assets.map((a) => a.substance))).sort()], [assets]);
+  const categories = useMemo(() => ["All", ...Array.from(new Set(assets.map((a) => a.category).filter((v) => v && v !== "All"))).sort()], [assets]);
+  const stateOptions = useMemo(() => ["All", ...Array.from(new Set(assets.map((a) => a.state).filter((v) => v && v !== "All"))).sort()], [assets]);
+  const substanceOptions = useMemo(() => ["All", ...Array.from(new Set(assets.map((a) => a.substance).filter((v) => v && v !== "All"))).sort()], [assets]);
 
   const updateFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
