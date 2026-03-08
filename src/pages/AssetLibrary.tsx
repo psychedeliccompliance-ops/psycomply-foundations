@@ -1,19 +1,16 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
-const categories = ["All", "Legal", "Clinical", "HR", "Controlled Substances", "Marketing", "Operations"];
-const stateOptions = ["All", "Oregon", "Colorado", "All States"];
-const substanceOptions = ["All", "Psilocybin", "Ketamine", "MDMA", "Ibogaine"];
 const sortOptions = [
   { value: "newest", label: "Newest" },
-  { value: "popular", label: "Most popular" },
   { value: "price-low", label: "Price: Low to High" },
   { value: "price-high", label: "Price: High to Low" },
+  { value: "az", label: "A–Z" },
 ];
 
 const AssetLibrary = () => {
@@ -23,14 +20,36 @@ const AssetLibrary = () => {
   const [substanceFilter, setSubstanceFilter] = useState(searchParams.get("substance") || "All");
   const [sort, setSort] = useState(searchParams.get("sort") || "newest");
 
-  const { data: assets = [] } = useQuery({
-    queryKey: ["assets"],
+  const { data: assets = [], isLoading, isError } = useQuery({
+    queryKey: ["assets-active"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("assets").select("*");
+      const { data, error } = await supabase
+        .from("assets")
+        .select("*")
+        .eq("is_bundle", false)
+        .filter("is_active", "eq", true)
+        .order("state")
+        .order("title");
       if (error) throw error;
       return data;
     },
   });
+
+  const { data: bundles = [] } = useQuery({
+    queryKey: ["assets-bundles"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("assets")
+        .select("*")
+        .eq("is_bundle", true);
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const categories = useMemo(() => ["All", ...Array.from(new Set(assets.map((a) => a.category))).sort()], [assets]);
+  const stateOptions = useMemo(() => ["All", ...Array.from(new Set(assets.map((a) => a.state))).sort()], [assets]);
+  const substanceOptions = useMemo(() => ["All", ...Array.from(new Set(assets.map((a) => a.substance))).sort()], [assets]);
 
   const updateFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -39,14 +58,14 @@ const AssetLibrary = () => {
     setSearchParams(params);
   };
 
-  const bundles = assets.filter((a) => a.is_bundle);
   const filteredAssets = useMemo(() => {
-    let result = assets.filter((a) => !a.is_bundle);
+    let result = [...assets];
     if (category !== "All") result = result.filter((a) => a.category === category);
     if (stateFilter !== "All") result = result.filter((a) => a.state === stateFilter || a.state === "All States");
     if (substanceFilter !== "All") result = result.filter((a) => a.substance === substanceFilter || a.substance === "All");
     if (sort === "price-low") result.sort((a, b) => a.price - b.price);
     if (sort === "price-high") result.sort((a, b) => b.price - a.price);
+    if (sort === "az") result.sort((a, b) => a.title.localeCompare(b.title));
     return result;
   }, [assets, category, stateFilter, substanceFilter, sort]);
 
@@ -93,6 +112,12 @@ const AssetLibrary = () => {
       {/* Filters */}
       <section className="section-padding sticky top-16 md:top-20 z-30 bg-background/95 backdrop-blur-sm border-b border-border py-4">
         <div className="container-wide flex flex-wrap gap-3 items-center">
+          <Select value={category} onValueChange={(v) => { setCategory(v); updateFilter("category", v); }}>
+            <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Category" /></SelectTrigger>
+            <SelectContent>
+              {categories.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+            </SelectContent>
+          </Select>
           <Select value={stateFilter} onValueChange={(v) => { setStateFilter(v); updateFilter("state", v); }}>
             <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="State" /></SelectTrigger>
             <SelectContent>
@@ -103,12 +128,6 @@ const AssetLibrary = () => {
             <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="Substance" /></SelectTrigger>
             <SelectContent>
               {substanceOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-            </SelectContent>
-          </Select>
-          <Select value={category} onValueChange={(v) => { setCategory(v); updateFilter("category", v); }}>
-            <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Category" /></SelectTrigger>
-            <SelectContent>
-              {categories.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
             </SelectContent>
           </Select>
           <Select value={sort} onValueChange={(v) => { setSort(v); updateFilter("sort", v); }}>
@@ -124,7 +143,20 @@ const AssetLibrary = () => {
       {/* Product Grid */}
       <section className="section-padding section-spacing">
         <div className="container-wide">
-          {filteredAssets.length === 0 ? (
+          {isLoading ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="bg-card border border-border rounded-xl p-6 space-y-3">
+                  <div className="flex gap-2"><Skeleton className="h-5 w-16" /><Skeleton className="h-5 w-14" /></div>
+                  <Skeleton className="h-6 w-full" />
+                  <Skeleton className="h-6 w-3/4" />
+                  <div className="flex justify-between pt-3"><Skeleton className="h-6 w-12" /><Skeleton className="h-7 w-20" /></div>
+                </div>
+              ))}
+            </div>
+          ) : isError ? (
+            <p className="text-center body-base text-destructive py-16">Something went wrong loading assets. Please try again later.</p>
+          ) : filteredAssets.length === 0 ? (
             <p className="text-center body-base text-muted-foreground py-16">No assets match your filters. Try adjusting your selection.</p>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
