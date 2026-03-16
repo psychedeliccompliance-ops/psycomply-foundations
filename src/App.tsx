@@ -42,6 +42,7 @@ const App = () => (
           <Route path="/assets/:slug" element={<AssetDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/book" element={<BookCall />} />
+          <Route path="/free-consultation" element={<BookCall />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
