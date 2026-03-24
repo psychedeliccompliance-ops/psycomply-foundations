@@ -19,6 +19,7 @@ import About from "./pages/About";
 import BookCall from "./pages/BookCall";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import DownloadPage from "./pages/Download";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
