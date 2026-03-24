@@ -19,6 +19,7 @@ import About from "./pages/About";
 import BookCall from "./pages/BookCall";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import DownloadPage from "./pages/Download";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/free-consultation" element={<BookCall />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/download" element={<DownloadPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
