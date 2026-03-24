@@ -46,6 +46,7 @@ const App = () => (
           <Route path="/free-consultation" element={<BookCall />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/download" element={<DownloadPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
