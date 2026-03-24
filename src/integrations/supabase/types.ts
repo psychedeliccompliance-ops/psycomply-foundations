@@ -29,8 +29,10 @@ export type Database = {
           price: number
           slug: string
           state: string
+          stripe_price_id: string | null
           substance: string
           title: string
+          toc: string[] | null
           why_you_need: string
         }
         Insert: {
@@ -47,8 +49,10 @@ export type Database = {
           price: number
           slug: string
           state: string
+          stripe_price_id?: string | null
           substance: string
           title: string
+          toc?: string[] | null
           why_you_need?: string
         }
         Update: {
@@ -65,8 +69,10 @@ export type Database = {
           price?: number
           slug?: string
           state?: string
+          stripe_price_id?: string | null
           substance?: string
           title?: string
+          toc?: string[] | null
           why_you_need?: string
         }
         Relationships: []
@@ -89,6 +95,36 @@ export type Database = {
           email?: string
           id?: string
           state_slug?: string
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          asset_slug: string
+          created_at: string
+          customer_email: string | null
+          download_url: string | null
+          id: string
+          session_id: string
+          status: string
+        }
+        Insert: {
+          asset_slug: string
+          created_at?: string
+          customer_email?: string | null
+          download_url?: string | null
+          id?: string
+          session_id: string
+          status?: string
+        }
+        Update: {
+          asset_slug?: string
+          created_at?: string
+          customer_email?: string | null
+          download_url?: string | null
+          id?: string
+          session_id?: string
+          status?: string
         }
         Relationships: []
       }
