@@ -30,9 +30,10 @@ export type Database = {
           slug: string
           state: string
           stripe_price_id: string | null
+          stripe_product_id: string | null
           substance: string
           title: string
-          toc: string[] | null
+          toc: Json | null
           why_you_need: string
         }
         Insert: {
@@ -50,9 +51,10 @@ export type Database = {
           slug: string
           state: string
           stripe_price_id?: string | null
+          stripe_product_id?: string | null
           substance: string
           title: string
-          toc?: string[] | null
+          toc?: Json | null
           why_you_need?: string
         }
         Update: {
@@ -70,9 +72,10 @@ export type Database = {
           slug?: string
           state?: string
           stripe_price_id?: string | null
+          stripe_product_id?: string | null
           substance?: string
           title?: string
-          toc?: string[] | null
+          toc?: Json | null
           why_you_need?: string
         }
         Relationships: []
