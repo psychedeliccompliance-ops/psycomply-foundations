@@ -103,27 +103,36 @@ export type Database = {
       }
       orders: {
         Row: {
+          amount_paid: number | null
+          asset_name: string | null
           asset_slug: string
           created_at: string
           customer_email: string | null
+          download_expires_at: string | null
           download_url: string | null
           id: string
           session_id: string
           status: string
         }
         Insert: {
+          amount_paid?: number | null
+          asset_name?: string | null
           asset_slug: string
           created_at?: string
           customer_email?: string | null
+          download_expires_at?: string | null
           download_url?: string | null
           id?: string
           session_id: string
           status?: string
         }
         Update: {
+          amount_paid?: number | null
+          asset_name?: string | null
           asset_slug?: string
           created_at?: string
           customer_email?: string | null
+          download_expires_at?: string | null
           download_url?: string | null
           id?: string
           session_id?: string
