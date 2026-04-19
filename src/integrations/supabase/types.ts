@@ -22,6 +22,7 @@ export type Database = {
           created_at: string
           description: string
           drive_link: string | null
+          filename: string | null
           format: string
           id: string
           is_active: boolean
@@ -43,6 +44,7 @@ export type Database = {
           created_at?: string
           description?: string
           drive_link?: string | null
+          filename?: string | null
           format?: string
           id?: string
           is_active?: boolean
@@ -64,6 +66,7 @@ export type Database = {
           created_at?: string
           description?: string
           drive_link?: string | null
+          filename?: string | null
           format?: string
           id?: string
           is_active?: boolean
