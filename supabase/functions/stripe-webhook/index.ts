@@ -97,15 +97,16 @@ serve(async (req) => {
     // Look up asset
     const { data: asset, error: assetErr } = await supabase
       .from("assets")
-      .select("title, slug")
+      .select("title, slug, filename")
       .eq("slug", slug)
       .maybeSingle();
 
     if (assetErr) throw new Error(`Asset lookup failed: ${assetErr.message}`);
     if (!asset) throw new Error(`Asset not found for slug: ${slug}`);
 
-    // Filename: prefer explicit metadata override, else derive from slug.
-    const filename = session.metadata?.filename || slugToFilename(slug);
+    // Filename: prefer asset.filename, then metadata override, else derive from slug.
+    const filename =
+      asset.filename || session.metadata?.filename || slugToFilename(slug);
 
     // Generate signed URL (24h)
     const expiresInSec = 60 * 60 * 24;
