@@ -29,7 +29,7 @@ serve(async (req) => {
 
     const { data: asset, error: dbError } = await supabaseClient
       .from("assets")
-      .select("stripe_price_id, title, slug")
+      .select("stripe_price_id, title, slug, filename")
       .eq("slug", slug)
       .maybeSingle();
 
@@ -56,7 +56,7 @@ serve(async (req) => {
       mode: "payment",
       success_url: `https://psychedeliccompliance.com/download?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://psychedeliccompliance.com/assets`,
-      metadata: { slug },
+      metadata: { slug, filename: asset.filename ?? "" },
     });
 
     return new Response(JSON.stringify({ url: session.url }), {
