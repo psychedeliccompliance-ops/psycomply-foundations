@@ -27,15 +27,31 @@ const leadSchema = z.object({
   practice_type: z.string().trim().min(1, { message: "Select your practice type" }).max(100),
 });
 
-const HeroLeadForm = () => {
+interface HeroLeadFormProps {
+  defaultStateSlug?: string;
+  defaultStateName?: string;
+  title?: string;
+  subtitle?: string;
+  badgeLabel?: string;
+}
+
+const HeroLeadForm = ({
+  defaultStateSlug,
+  defaultStateName,
+  title,
+  subtitle,
+  badgeLabel = "Free state updates",
+}: HeroLeadFormProps = {}) => {
   const { toast } = useToast();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-  const [stateSlug, setStateSlug] = useState("");
+  const [stateSlug, setStateSlug] = useState(defaultStateSlug ?? "");
   const [practiceType, setPracticeType] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [expanded, setExpanded] = useState(false);
+
+  const stateLocked = Boolean(defaultStateSlug);
 
   const { data: states = [] } = useQuery({
     queryKey: ["states-lead-form"],
@@ -87,7 +103,7 @@ const HeroLeadForm = () => {
     setSuccess(true);
     setFirstName("");
     setEmail("");
-    setStateSlug("");
+    setStateSlug(defaultStateSlug ?? "");
     setPracticeType("");
   };
 
@@ -105,7 +121,7 @@ const HeroLeadForm = () => {
       <div className="relative bg-card border border-border rounded-2xl shadow-xl p-8 lg:p-10">
         <div className="absolute -top-4 left-8 inline-flex items-center gap-2 bg-gold text-gold-foreground font-sans text-xs font-semibold px-3 py-1.5 rounded-full">
           <Bell size={12} />
-          Free state updates
+          {badgeLabel}
         </div>
 
         {success ? (
@@ -121,10 +137,10 @@ const HeroLeadForm = () => {
         ) : (
           <>
             <h3 className="font-serif text-2xl lg:text-3xl text-foreground leading-tight">
-              Be In The Know: Get Psychedelic Regulation Updates For Your State
+              {title ?? "Be In The Know: Get Psychedelic Regulation Updates For Your State"}
             </h3>
             <p className="mt-3 body-sm text-muted-foreground">
-              Regulations move fast. We'll send you the changes that actually affect your practice — no fluff.
+              {subtitle ?? "Regulations move fast. We'll send you the changes that actually affect your practice — no fluff."}
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
