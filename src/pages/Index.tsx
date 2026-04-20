@@ -64,7 +64,7 @@ const Index = () => {
       <section className="section-padding relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-cream-dark opacity-80" />
         <div className="container-wide relative py-20 md:py-28 lg:py-32">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
+          <div className="lg:grid lg:grid-cols-12 lg:gap-16 lg:items-start">
             <motion.div
               initial="hidden"
               animate="visible"
