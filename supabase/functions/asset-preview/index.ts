@@ -32,7 +32,7 @@ async function ccFetch(path: string, apiKey: string, init?: RequestInit) {
   return res.json();
 }
 
-async function waitForJob(jobId: string, apiKey: string, timeoutMs = 90_000) {
+async function waitForJob(jobId: string, apiKey: string, timeoutMs = 180_000) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     const j = await ccFetch(`/jobs/${jobId}`, apiKey);
@@ -128,8 +128,8 @@ serve(async (req) => {
             input: "import-doc",
             input_format: "docx",
             output_format: "jpg",
-            pages: "1-8",
-            pixel_density: 120,
+            pages: "1-5",
+            pixel_density: 100,
           },
           "export-doc": {
             operation: "export/url",
@@ -148,7 +148,7 @@ serve(async (req) => {
 
     // Download each and upload to previews bucket
     const uploaded: string[] = [];
-    for (let i = 0; i < files.length && i < 8; i++) {
+    for (let i = 0; i < files.length && i < 5; i++) {
       const f = files[i];
       const r = await fetch(f.url);
       if (!r.ok) throw new Error(`Failed to download preview ${i + 1}`);
