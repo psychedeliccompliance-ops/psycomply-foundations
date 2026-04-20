@@ -1,0 +1,23 @@
+// Simplified white SVG outlines for US states. Stylized representations only.
+export const stateOutlines: Record<string, string> = {
+  oregon: "M20 30 L180 30 L180 50 L195 50 L195 130 L20 130 Z",
+  colorado: "M20 30 L195 30 L195 140 L20 140 Z",
+  california: "M40 20 L90 20 L100 50 L130 80 L160 130 L180 180 L160 220 L120 230 L80 220 L60 180 L40 130 Z",
+  washington: "M20 40 L90 30 L130 35 L195 50 L195 130 L160 135 L100 130 L20 125 Z",
+  "new-mexico": "M20 30 L180 30 L180 50 L195 50 L195 170 L20 170 Z",
+  utah: "M40 30 L160 30 L160 90 L195 90 L195 170 L40 170 Z",
+  nevada: "M40 30 L130 30 L195 180 L160 200 L40 130 Z",
+  arizona: "M30 40 L180 40 L180 130 L150 170 L30 170 Z",
+  texas: "M40 30 L120 30 L130 50 L170 50 L180 80 L195 130 L160 200 L120 220 L80 200 L40 150 Z",
+  florida: "M30 30 L160 30 L170 60 L195 90 L185 140 L155 170 L120 150 L80 100 L30 80 Z",
+  "new-york": "M20 60 L70 30 L120 40 L180 50 L195 90 L160 130 L100 140 L40 120 Z",
+  "new-jersey": "M70 30 L130 30 L150 70 L160 130 L130 180 L100 170 L80 140 L60 90 Z",
+  massachusetts: "M20 60 L60 40 L130 40 L195 70 L195 110 L130 130 L60 120 L20 100 Z",
+  illinois: "M50 30 L150 30 L160 80 L155 140 L130 200 L80 200 L50 150 Z",
+  michigan: "M40 80 L60 30 L130 30 L160 80 L150 140 L100 180 L50 140 Z",
+  "north-carolina": "M20 60 L60 40 L120 35 L180 50 L195 90 L160 110 L100 110 L40 90 Z",
+};
+
+export const getStateOutline = (slug: string): string => {
+  return stateOutlines[slug] || "M30 30 L195 30 L195 170 L30 170 Z";
+};

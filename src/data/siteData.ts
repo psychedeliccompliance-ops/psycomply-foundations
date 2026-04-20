@@ -294,18 +294,15 @@ export const assets: Asset[] = [
 
 export const testimonials = [
   {
-    quote: "[Placeholder] PsyComply gave us everything we needed to open our doors with confidence. The compliance piece was the part we dreaded most, and they just handled it.",
-    name: "[Client Name]",
+    quote: "PsyComply gave us everything we needed to open our doors with confidence. The compliance piece was the part we dreaded most, and they just handled it.",
     role: "Psilocybin Service Center Owner, Oregon",
   },
   {
-    quote: "[Placeholder] We were spending so much time trying to figure out the regulatory requirements ourselves. Having someone who actually knows this space saved us months.",
-    name: "[Client Name]",
+    quote: "We were spending so much time trying to figure out the regulatory requirements ourselves. Having someone who actually knows this space saved us months.",
     role: "Ketamine Clinic Director, Colorado",
   },
   {
-    quote: "[Placeholder] The asset library alone was worth it. We bought the Oregon bundle and had our documentation foundation ready in a weekend.",
-    name: "[Client Name]",
+    quote: "The asset library alone was worth it. We bought the Oregon bundle and had our documentation foundation ready in a weekend.",
     role: "Psilocybin Facilitator, Oregon",
   },
 ];
