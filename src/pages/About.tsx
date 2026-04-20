@@ -7,7 +7,7 @@ const About = () => {
     <main className="pb-16 md:pb-0">
       <section className="section-padding py-20 md:py-28">
         <div className="container-wide max-w-3xl">
-          <h1 className="heading-1 text-foreground">Built by someone who saw the gap</h1>
+          <h1 className="heading-1 text-foreground">Built by people who saw the gap</h1>
         </div>
       </section>
 
@@ -51,7 +51,7 @@ const About = () => {
             <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans px-10">
               <Link to="/book">Book a Free Call</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="font-sans px-10 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+            <Button asChild size="lg" variant="outline" className="font-sans px-10 bg-transparent border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
               <Link to="/services">Browse Services</Link>
             </Button>
           </div>
