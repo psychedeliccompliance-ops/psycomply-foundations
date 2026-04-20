@@ -86,24 +86,31 @@ const Index = () => {
                   <Link to="/assets">Browse the Asset Library</Link>
                 </Button>
               </motion.div>
+
+              {/* CTA buttons — mobile only, directly under hero text, before the form */}
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 lg:hidden">
+                <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
+                  <Link to="/book">Book a Free Discovery Call</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="font-sans text-base px-8 border-foreground/20 hover:bg-foreground/5">
+                  <Link to="/assets">Browse the Asset Library</Link>
+                </Button>
+              </div>
             </motion.div>
 
-            {/* Form — appears under hero text on mobile, right column on desktop */}
-            <div className="mt-10 lg:mt-0 lg:col-span-5 lg:order-2">
+            {/* Form — desktop right column only */}
+            <div className="hidden lg:block lg:col-span-5 lg:order-2">
               <HeroLeadForm />
-            </div>
-
-            {/* CTA buttons — mobile only, after the form */}
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 lg:hidden">
-              <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
-                <Link to="/book">Book a Free Discovery Call</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="font-sans text-base px-8 border-foreground/20 hover:bg-foreground/5">
-                <Link to="/assets">Browse the Asset Library</Link>
-              </Button>
             </div>
           </div>
           <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl hidden lg:block" />
+        </div>
+      </section>
+
+      {/* Mobile-only standalone form section (below hero CTAs) */}
+      <section className="lg:hidden section-padding pb-12 -mt-4">
+        <div className="container-wide">
+          <HeroLeadForm />
         </div>
       </section>
 
