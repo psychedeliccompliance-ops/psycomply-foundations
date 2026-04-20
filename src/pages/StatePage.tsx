@@ -120,12 +120,12 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
           <div className="container-wide">
             <h2 className="heading-3 text-foreground mb-3 text-center">Substances We Cover in {state.name}</h2>
             <p className="body-base text-muted-foreground mb-8 text-center">Select a substance for detailed compliance resources.</p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+            <div className="flex flex-wrap justify-center gap-6">
               {linkedSubstances.map((sub) => (
                 <Link
                   key={sub.slug}
                   to={`/substances/${sub.slug}`}
-                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-sm"
                 >
                   <h3 className="font-serif text-lg font-medium text-foreground mb-2">{sub.name}</h3>
                   <p className="body-sm text-muted-foreground mb-4 line-clamp-2">{sub.legal_status?.split(".")[0]}.</p>
@@ -281,12 +281,12 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
           <div className="container-wide">
             <h2 className="heading-3 text-foreground mb-3 text-center">Substances We Cover in {state.name}</h2>
             <p className="body-base text-muted-foreground mb-8 text-center">Select a substance for detailed compliance resources.</p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+            <div className="flex flex-wrap justify-center gap-6">
               {linkedSubstances.map((sub) => (
                 <Link
                   key={sub.slug}
                   to={`/substances/${sub.slug}`}
-                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-sm"
                 >
                   <h3 className="font-serif text-lg font-medium text-foreground mb-2">{sub.name}</h3>
                   <p className="body-sm text-muted-foreground mb-4 line-clamp-2">{sub.legal_status?.split(".")[0]}.</p>
