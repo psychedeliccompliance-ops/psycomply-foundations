@@ -67,7 +67,9 @@ const ServiceDetail = () => {
                 <p className="body-base text-foreground mb-4">{tier.description}</p>
                 <p className="font-sans text-xl font-semibold text-foreground mb-6">{tier.price}</p>
                 <Button asChild className="w-full bg-gold text-gold-foreground hover:bg-gold-hover font-sans">
-                  <Link to="/book">Get started</Link>
+                  <Link to={tier.name === "DIY" ? "/assets" : "/book"}>
+                    {tier.name === "DIY" ? "Browse templates" : "Get started"}
+                  </Link>
                 </Button>
               </div>
             ))}

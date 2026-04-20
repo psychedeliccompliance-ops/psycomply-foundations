@@ -54,7 +54,7 @@ export const services: Service[] = [
     whatsIncluded: "State licensing applications and renewals. Informed consent documentation customized to your substance and jurisdiction. Regulatory filing templates and submission support. Compliance audit preparation. Legal risk assessment for your specific operational model.",
     icon: "Scale",
     tiers: [
-      { name: "DIY", description: "Purchase individual legal templates from our asset library", price: "From $49" },
+      { name: "DIY", description: "Purchase individual legal templates from our asset library", price: "From $99" },
       { name: "Done With You", description: "We guide you through the legal setup with consulting calls and document reviews", price: "From $1,500" },
       { name: "Done For You", description: "We handle every legal filing, document, and compliance requirement", price: "Custom quote" },
     ],
@@ -68,7 +68,7 @@ export const services: Service[] = [
     whatsIncluded: "Patient intake forms and screening protocols. Session documentation templates. Clinical workflow design and SOPs. Adverse event reporting procedures. Follow-up and integration session frameworks. Quality assurance systems.",
     icon: "Heart",
     tiers: [
-      { name: "DIY", description: "Clinical templates and protocol documents from our library", price: "From $39" },
+      { name: "DIY", description: "Clinical templates and protocol documents from our library", price: "From $99" },
       { name: "Done With You", description: "Consulting sessions to build your clinical operation together", price: "From $2,000" },
       { name: "Done For You", description: "We design and document your entire clinical operation", price: "Custom quote" },
     ],
@@ -82,7 +82,7 @@ export const services: Service[] = [
     whatsIncluded: "DEA registration support and compliance documentation. Inventory tracking systems and logs. Secure storage protocols and facility requirements. Chain-of-custody documentation. Waste disposal and destruction procedures. Audit preparation for substance management.",
     icon: "Lock",
     tiers: [
-      { name: "DIY", description: "Substance management templates and tracking logs", price: "From $59" },
+      { name: "DIY", description: "Substance management templates and tracking logs", price: "From $99" },
       { name: "Done With You", description: "We help you set up your substance management systems", price: "From $2,500" },
       { name: "Done For You", description: "Complete substance management infrastructure built for you", price: "Custom quote" },
     ],
@@ -96,7 +96,7 @@ export const services: Service[] = [
     whatsIncluded: "Hiring and credentialing checklists. Background check requirements by state. Staff training program design. Employee handbook templates for psychedelic businesses. Continuing education tracking. Workplace safety and incident reporting procedures.",
     icon: "Users",
     tiers: [
-      { name: "DIY", description: "HR templates, handbooks, and training checklists", price: "From $39" },
+      { name: "DIY", description: "HR templates, handbooks, and training checklists", price: "From $99" },
       { name: "Done With You", description: "We review and build your HR compliance with you", price: "From $1,200" },
       { name: "Done For You", description: "Full HR compliance setup for your organization", price: "Custom quote" },
     ],
@@ -110,7 +110,7 @@ export const services: Service[] = [
     whatsIncluded: "Business entity structuring guidance. Insurance requirements and provider recommendations. Financial record-keeping systems. Operational SOPs for daily business management. Vendor and contractor agreement templates. Business continuity and risk planning.",
     icon: "Building",
     tiers: [
-      { name: "DIY", description: "Business administration templates and guides", price: "From $49" },
+      { name: "DIY", description: "Business administration templates and guides", price: "From $99" },
       { name: "Done With You", description: "Consulting to structure and set up your business operations", price: "From $1,800" },
       { name: "Done For You", description: "Complete business administration setup", price: "Custom quote" },
     ],
@@ -124,7 +124,7 @@ export const services: Service[] = [
     whatsIncluded: "Marketing compliance guidelines for your state and substance. Advertising restriction summaries by platform. Website content compliance review. Social media policy templates. Health claims do's and don'ts. Brand messaging frameworks that stay compliant.",
     icon: "Megaphone",
     tiers: [
-      { name: "DIY", description: "Marketing compliance guides and policy templates", price: "From $29" },
+      { name: "DIY", description: "Marketing compliance guides and policy templates", price: "From $99" },
       { name: "Done With You", description: "We review your marketing materials and build guidelines together", price: "From $1,000" },
       { name: "Done For You", description: "Complete marketing compliance overhaul and ongoing review", price: "Custom quote" },
     ],
