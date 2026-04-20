@@ -206,6 +206,15 @@ const AssetDetail = () => {
                   </div>
                 </div>
 
+                {/* Diagonal watermark banner */}
+                <div className="pointer-events-none absolute inset-0 overflow-hidden z-10 flex items-center justify-center">
+                  <div className="w-[150%] bg-foreground/40 backdrop-blur-[1px] py-3 text-center rotate-[-20deg] shadow-lg border-y border-foreground/20">
+                    <span className="font-sans font-bold tracking-[0.3em] text-background text-lg md:text-2xl">
+                      DOCUMENT PREVIEW
+                    </span>
+                  </div>
+                </div>
+
                 {/* Fade-out gradient overlay (sticky at bottom of viewport) */}
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-[hsl(var(--cream))]/85 to-[hsl(var(--cream))]" />
 
