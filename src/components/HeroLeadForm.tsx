@@ -12,7 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 const PRACTICE_TYPES = [
   "Ketamine clinic",
   "Psilocybin service center",
-  "MDMA-assisted therapy",
   "Solo facilitator / therapist",
   "Group practice",
   "Investor / operator",
