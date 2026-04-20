@@ -1,0 +1,1 @@
+UPDATE public.assets SET preview_pages = NULL;
