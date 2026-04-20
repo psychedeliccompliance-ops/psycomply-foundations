@@ -59,7 +59,7 @@ const Index = () => {
   const comingSoonStates = states.filter((s) => !s.active);
 
   return (
-    <main className="pb-16 md:pb-0">
+    <main className="pb-28 md:pb-0">
       {/* Hero */}
       <section className="section-padding relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-cream-dark opacity-80" />

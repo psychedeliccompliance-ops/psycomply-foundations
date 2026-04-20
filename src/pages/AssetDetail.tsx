@@ -101,7 +101,7 @@ const AssetDetail = () => {
   const descriptionPreview = asset.description?.slice(0, 300) || "";
 
   return (
-    <main className="pb-16 md:pb-0">
+    <main className="pb-28 md:pb-0">
       <section className="section-padding py-16 md:py-24">
         <div className="container-wide max-w-4xl">
           <Link to="/assets" className="font-sans text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 mb-6">

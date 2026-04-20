@@ -64,7 +64,7 @@ const SubstancePage = () => {
   );
 
   return (
-    <main className="pb-16 md:pb-0">
+    <main className="pb-28 md:pb-0">
       {/* Hero */}
       <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground">
         <div className="container-wide max-w-3xl">

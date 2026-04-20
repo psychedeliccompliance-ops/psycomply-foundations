@@ -86,7 +86,7 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
   );
 
   return (
-    <main className="pb-16 md:pb-0">
+    <main className="pb-28 md:pb-0">
       {/* Hero */}
       <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground relative overflow-hidden">
         <div className="container-wide grid md:grid-cols-2 gap-10 items-center relative">
@@ -243,7 +243,7 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
   };
 
   return (
-    <main className="pb-16 md:pb-0">
+    <main className="pb-28 md:pb-0">
       {/* Hero */}
       <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground">
         <div className="container-wide grid md:grid-cols-2 gap-10 items-center">

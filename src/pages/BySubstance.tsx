@@ -15,7 +15,7 @@ const BySubstance = () => {
   });
 
   return (
-    <main className="pb-16 md:pb-0">
+    <main className="pb-28 md:pb-0">
       <section className="section-padding py-20 md:py-28">
         <div className="container-wide max-w-3xl">
           <h1 className="heading-1 text-foreground">Compliance built around your substance</h1>
