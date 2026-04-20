@@ -378,7 +378,6 @@ const Index = () => {
                 <Star size={20} className="text-gold mb-4" />
                 <p className="body-base text-foreground italic mb-6">{t.quote}</p>
                 <div>
-                  <p className="font-sans text-sm font-semibold text-foreground">{t.name}</p>
                   <p className="font-sans text-xs text-muted-foreground">{t.role}</p>
                 </div>
               </motion.div>
