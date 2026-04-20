@@ -94,6 +94,13 @@ const ServiceDetail = () => {
               </Link>
             ))}
           </div>
+          <div className="mt-10 text-center">
+            <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans px-10">
+              <Link to={`/assets?category=${encodeURIComponent(service.title)}`}>
+                See all {service.title} assets <ArrowRight size={16} className="ml-2" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
