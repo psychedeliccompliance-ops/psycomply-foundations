@@ -144,24 +144,103 @@ const AssetDetail = () => {
                 </div>
               )}
 
-              {/* Blurred preview */}
-              <div className="relative mb-8">
-                <div className="bg-card border border-border rounded-xl p-8">
-                  <p className="body-base text-muted-foreground leading-relaxed blur-[3px] select-none">
-                    {descriptionPreview}
-                    {asset.description && asset.description.length > 300 ? "…" : ""}
-                  </p>
+              {/* Document preview */}
+              <div className="relative mb-8 rounded-xl overflow-hidden shadow-2xl border border-border">
+                {/* Scrollable document page */}
+                <div
+                  className="relative h-[640px] overflow-y-auto bg-[hsl(var(--cream))]"
+                  style={{ scrollbarGutter: "stable" }}
+                >
+                  <div className="mx-auto max-w-[680px] px-10 md:px-14 py-12 font-serif text-foreground">
+                    {/* Document title */}
+                    <h1
+                      className="text-3xl md:text-4xl font-semibold leading-tight mb-2 text-primary"
+                      style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                    >
+                      {asset.title}
+                    </h1>
+                    <p
+                      className="italic text-base mb-8 text-accent"
+                      style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                    >
+                      {asset.state} • {asset.substance}
+                    </p>
+                    <div className="h-px bg-primary/30 mb-10" />
+
+                    {/* First two sections */}
+                    {(toc && toc.length > 0
+                      ? toc.slice(0, 2)
+                      : ["Overview", "Purpose & Scope"]
+                    ).map((heading, i) => {
+                      const paragraphs = (asset.description || "")
+                        .split(/\n\n+/)
+                        .filter(Boolean);
+                      const para =
+                        paragraphs[i] ||
+                        paragraphs[0] ||
+                        "This document provides comprehensive guidance covering all required elements for compliance, including detailed protocols, procedures, and best-practice frameworks tailored for your jurisdiction.";
+                      return (
+                        <section key={i} className="mb-10">
+                          <h2
+                            className="text-xl md:text-2xl font-semibold mb-4 text-primary"
+                            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                          >
+                            {String(i + 1).padStart(2, "0")}. {heading}
+                          </h2>
+                          <p
+                            className="text-[15px] leading-[1.8] text-foreground/90"
+                            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                          >
+                            {para}
+                          </p>
+                        </section>
+                      );
+                    })}
+
+                    {/* Teaser content that gets faded */}
+                    {toc && toc.length > 2 && (
+                      <section className="mb-10 opacity-90">
+                        <h2
+                          className="text-xl md:text-2xl font-semibold mb-4 text-primary"
+                          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                        >
+                          03. {toc[2]}
+                        </h2>
+                        <p
+                          className="text-[15px] leading-[1.8] text-foreground/90"
+                          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                        >
+                          {(asset.description || "").slice(0, 400)}
+                          {asset.description && asset.description.length > 400 ? "…" : ""}
+                        </p>
+                      </section>
+                    )}
+
+                    {/* Bottom padding so fade has room */}
+                    <div className="h-64" />
+                  </div>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/60 to-card rounded-xl flex items-end justify-center pb-8">
-                  <div className="text-center">
-                    <p className="font-sans font-semibold text-foreground mb-3">Buy to unlock full document</p>
+
+                {/* Fade-out gradient overlay (sticky at bottom of viewport) */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-[hsl(var(--cream))]/85 to-[hsl(var(--cream))]" />
+
+                {/* Unlock CTA overlay */}
+                <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end pb-8 px-6">
+                  <div className="bg-card/95 backdrop-blur-sm border border-border rounded-xl shadow-lg px-6 py-5 text-center max-w-sm w-full">
+                    <p className="font-sans font-semibold text-foreground mb-3">
+                      Purchase to unlock the full document
+                    </p>
                     <Button
                       onClick={handleBuyNow}
                       disabled={isCheckingOut}
-                      className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans"
+                      className="w-full bg-gold text-gold-foreground hover:bg-gold-hover font-sans"
                     >
-                      {isCheckingOut ? <Loader2 size={16} className="mr-2 animate-spin" /> : <ShoppingCart size={16} className="mr-2" />}
-                      Unlock Now — ${asset.price}
+                      {isCheckingOut ? (
+                        <Loader2 size={16} className="mr-2 animate-spin" />
+                      ) : (
+                        <ShoppingCart size={16} className="mr-2" />
+                      )}
+                      Buy Now — ${asset.price}
                     </Button>
                   </div>
                 </div>
