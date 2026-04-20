@@ -127,42 +127,8 @@ const HeroLeadForm = () => {
               Regulations move fast. We'll send you the changes that actually affect your practice — no fluff.
             </p>
 
-            {!expanded && (
-              <Button
-                type="button"
-                size="lg"
-                onClick={() => setExpanded(true)}
-                className="mt-6 w-full bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base h-12 flex items-center justify-center gap-2"
-              >
-                Get state updates
-                <ChevronDown size={16} />
-              </Button>
-            )}
-
-            <AnimatePresence initial={false}>
-              {expanded && (
-                <motion.form
-                  key="lead-form"
-                  onSubmit={handleSubmit}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  className="mt-6 space-y-4 overflow-hidden"
-                >
-              <div className="relative">
-                <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="First name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="pl-10 h-12 font-sans"
-                  maxLength={100}
-                  required
-                />
-              </div>
-
+            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+              {/* Always-visible email field */}
               <div className="relative">
                 <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <Input
@@ -170,13 +136,48 @@ const HeroLeadForm = () => {
                   placeholder="you@practice.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => setExpanded(true)}
                   className="pl-10 h-12 font-sans"
                   maxLength={255}
                   required
                 />
               </div>
 
-              <div className="relative">
+              {!expanded && (
+                <Button
+                  type="button"
+                  size="lg"
+                  onClick={() => setExpanded(true)}
+                  className="w-full bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base h-12 flex items-center justify-center gap-2"
+                >
+                  Continue
+                  <ChevronDown size={16} />
+                </Button>
+              )}
+
+              <AnimatePresence initial={false}>
+                {expanded && (
+                  <motion.div
+                    key="rest-of-form"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="space-y-4 overflow-hidden"
+                  >
+                    <div className="relative">
+                      <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                        type="text"
+                        placeholder="First name"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        className="pl-10 h-12 font-sans"
+                        maxLength={100}
+                      />
+                    </div>
+
+                    <div className="relative">
                 <Briefcase size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground z-10 pointer-events-none" />
                 <Select value={practiceType} onValueChange={setPracticeType}>
                   <SelectTrigger className="pl-10 h-12 font-sans">
@@ -220,9 +221,10 @@ const HeroLeadForm = () => {
               <p className="text-xs text-muted-foreground text-center font-sans">
                 No spam. Unsubscribe anytime.
               </p>
-                </motion.form>
-              )}
-            </AnimatePresence>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </form>
           </>
         )}
       </div>
