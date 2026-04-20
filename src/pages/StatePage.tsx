@@ -102,7 +102,7 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
               <Link to="/book">Book a Free Call</Link>
             </Button>
           </div>
-          <div>
+          <div className="w-full max-w-md md:ml-auto">
             <HeroLeadForm
               defaultStateSlug={state.slug}
               defaultStateName={state.name}
@@ -263,7 +263,7 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
               </div>
             )}
           </div>
-          <div>
+          <div className="w-full max-w-md md:ml-auto">
             <HeroLeadForm
               defaultStateSlug={slug}
               defaultStateName={state.name}
