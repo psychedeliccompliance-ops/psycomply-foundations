@@ -287,16 +287,17 @@ const Index = () => {
       <section className="section-padding section-spacing">
         <div className="container-wide">
           <h2 className="heading-2 text-foreground text-center mb-12">Built around the substance you work with</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
             {substances.map((substance, i) =>
             <motion.div
               key={substance.slug}
+              className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}>
 
-                <Link
+                 <Link
                 to={`/substances/${substance.slug}`}
                 className="block bg-card border border-border rounded-xl p-7 text-center hover:border-primary/30 hover:shadow-md transition-all h-full">
 
