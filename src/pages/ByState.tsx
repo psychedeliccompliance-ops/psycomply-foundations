@@ -109,6 +109,21 @@ const ComingSoonCard = ({ state }: ComingSoonCardProps) => {
     if (error) {
       toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
     } else {
+      supabase.functions
+        .invoke("send-transactional-email", {
+          body: {
+            templateName: "new-lead-notification",
+            recipientEmail: "psychedeliccompliance@gmail.com",
+            idempotencyKey: `lead-${email}-${Date.now()}`,
+            templateData: {
+              leadEmail: email,
+              stateSlug: state.slug,
+              timestamp: new Date().toISOString(),
+            },
+          },
+        })
+        .catch((err) => console.warn("Lead notification email failed", err));
+
       toast({ title: "You're on the list!", description: `We'll notify you when ${state.name} resources are ready.` });
       setEmail("");
     }

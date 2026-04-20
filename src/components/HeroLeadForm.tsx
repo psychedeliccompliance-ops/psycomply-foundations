@@ -100,6 +100,24 @@ const HeroLeadForm = ({
       return;
     }
 
+    // Fire-and-forget admin notification
+    supabase.functions
+      .invoke("send-transactional-email", {
+        body: {
+          templateName: "new-lead-notification",
+          recipientEmail: "psychedeliccompliance@gmail.com",
+          idempotencyKey: `lead-${parsed.data.email}-${Date.now()}`,
+          templateData: {
+            leadEmail: parsed.data.email,
+            firstName: parsed.data.first_name,
+            stateSlug: parsed.data.state_slug,
+            practiceType: parsed.data.practice_type,
+            timestamp: new Date().toISOString(),
+          },
+        },
+      })
+      .catch((err) => console.warn("Lead notification email failed", err));
+
     setSuccess(true);
     setFirstName("");
     setEmail("");
