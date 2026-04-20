@@ -64,11 +64,12 @@ const Index = () => {
       <section className="section-padding relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-cream-dark opacity-80" />
         <div className="container-wide relative py-20 md:py-28 lg:py-32">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-16 lg:items-start">
+          <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
+            {/* Headline + subtext */}
             <motion.div
               initial="hidden"
               animate="visible"
-              className="lg:col-span-7"
+              className="lg:col-span-7 lg:order-1"
             >
               <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">
                 You heal.<br />We do paperwork.
@@ -76,19 +77,8 @@ const Index = () => {
               <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">
                 PsyComply covers the full operational and legal foundation of your psychedelic practice — from day one.
               </motion.p>
-            </motion.div>
-
-            {/* Form: appears here on mobile (directly beneath hero text), and in right column on desktop */}
-            <div className="mt-10 lg:mt-0 lg:-mt-6 lg:col-span-5 lg:row-span-2 lg:order-last">
-              <HeroLeadForm />
-            </div>
-
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              className="lg:col-span-7"
-            >
-              <motion.div variants={fadeUp} custom={2} className="mt-10 flex flex-col sm:flex-row gap-4">
+              {/* CTA buttons — desktop only here, so they stay grouped with text and centered as a unit */}
+              <motion.div variants={fadeUp} custom={2} className="mt-10 hidden lg:flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
                   <Link to="/book">Book a Free Discovery Call</Link>
                 </Button>
@@ -97,6 +87,21 @@ const Index = () => {
                 </Button>
               </motion.div>
             </motion.div>
+
+            {/* Form — appears under hero text on mobile, right column on desktop */}
+            <div className="mt-10 lg:mt-0 lg:col-span-5 lg:order-2">
+              <HeroLeadForm />
+            </div>
+
+            {/* CTA buttons — mobile only, after the form */}
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 lg:hidden">
+              <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
+                <Link to="/book">Book a Free Discovery Call</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="font-sans text-base px-8 border-foreground/20 hover:bg-foreground/5">
+                <Link to="/assets">Browse the Asset Library</Link>
+              </Button>
+            </div>
           </div>
           <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl hidden lg:block" />
         </div>
