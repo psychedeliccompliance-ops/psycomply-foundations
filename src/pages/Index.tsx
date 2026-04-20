@@ -138,11 +138,11 @@ const Index = () => {
           <div className="grid grid-cols-2 gap-4">
             {[
             { icon: <Scale size={24} />, label: "Legal Compliance", href: "/services/legal-compliance" },
-            { icon: <Heart size={24} />, label: "Clinical Protocols", href: "/services/clinical-protocols" },
-            { icon: <Lock size={24} />, label: "Substance Management", href: "/services/substance-management" },
-            { icon: <Users size={24} />, label: "Staff & HR", href: "/services/staff-hr" },
-            { icon: <Building2 size={24} />, label: "Business Operations", href: "/services/business-operations" },
-            { icon: <Megaphone size={24} />, label: "Marketing Compliance", href: "/services/marketing-compliance" }].
+            { icon: <Heart size={24} />, label: "Clinical Protocols", href: "/services/clinical-operations" },
+            { icon: <Lock size={24} />, label: "Substance Management", href: "/services/controlled-substance-management" },
+            { icon: <Users size={24} />, label: "Staff & HR", href: "/services/staff-hr-compliance" },
+            { icon: <Building2 size={24} />, label: "Business Operations", href: "/services/business-administration" },
+            { icon: <Megaphone size={24} />, label: "Marketing Compliance", href: "/services/marketing-branding-compliance" }].
             map((item, i) =>
             <Link key={i} to={item.href} className="bg-card border border-border rounded-lg p-5 flex flex-col items-center text-center gap-3 hover:border-primary/40 hover:shadow-md transition-all">
                 <div className="text-primary">{item.icon}</div>
