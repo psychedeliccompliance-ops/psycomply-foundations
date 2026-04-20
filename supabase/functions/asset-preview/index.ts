@@ -85,6 +85,30 @@ serve(async (req) => {
       throw new Error(`Could not sign source: ${signErr?.message ?? "no url"}`);
     }
 
+    // Sanity check the file bytes — CloudConvert keeps reporting OPEN_FAILED.
+    // A real .docx is a ZIP (starts with PK\x03\x04). If we see something else
+    // (e.g. plain text, HTML, or an error JSON), we surface it so we know.
+    try {
+      const probe = await fetch(signed.signedUrl);
+      const buf = new Uint8Array(await probe.arrayBuffer());
+      const hex = Array.from(buf.slice(0, 8))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join(" ");
+      const ascii = new TextDecoder("utf-8", { fatal: false }).decode(buf.slice(0, 120));
+      const isZip = buf[0] === 0x50 && buf[1] === 0x4b;
+      console.log(
+        `[asset-preview] probe ${filename} status=${probe.status} size=${buf.length} isZip=${isZip} hex=${hex} ascii=${JSON.stringify(ascii)}`
+      );
+      if (!isZip) {
+        throw new Error(
+          `Stored file is not a valid DOCX (no PK zip signature). First bytes: ${hex}. Preview ASCII: ${ascii.slice(0, 80)}`
+        );
+      }
+    } catch (probeErr) {
+      const m = probeErr instanceof Error ? probeErr.message : String(probeErr);
+      throw new Error(`Source file probe failed: ${m}`);
+    }
+
     // Create CloudConvert job: import URL -> convert docx to jpg pages 1-2 -> export url
     const job = await ccFetch("/jobs", ccKey, {
       method: "POST",
