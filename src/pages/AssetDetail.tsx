@@ -20,6 +20,22 @@ const AssetDetail = () => {
     },
   });
 
+  const { data: previewData, isLoading: previewLoading } = useQuery({
+    queryKey: ["asset-preview", slug],
+    enabled: !!asset,
+    staleTime: 1000 * 60 * 60,
+    queryFn: async () => {
+      // Use cached pages if already on the asset row
+      const cached = (asset as any)?.preview_pages as string[] | null | undefined;
+      if (cached && cached.length > 0) return { preview_pages: cached };
+      const { data, error } = await supabase.functions.invoke("asset-preview", {
+        body: { slug },
+      });
+      if (error) throw error;
+      return data as { preview_pages: string[] };
+    },
+  });
+
   const { data: relatedAssets = [] } = useQuery({
     queryKey: ["related-assets", slug, asset?.category, asset?.substance],
     enabled: !!asset,
@@ -151,73 +167,31 @@ const AssetDetail = () => {
                   className="relative h-[640px] overflow-y-auto bg-[hsl(var(--cream))]"
                   style={{ scrollbarGutter: "stable" }}
                 >
-                  <div className="mx-auto max-w-[680px] px-10 md:px-14 py-12 font-serif text-foreground">
-                    {/* Document title */}
-                    <h1
-                      className="text-3xl md:text-4xl font-semibold leading-tight mb-2 text-primary"
-                      style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-                    >
-                      {asset.title}
-                    </h1>
-                    <p
-                      className="italic text-base mb-8 text-accent"
-                      style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-                    >
-                      {asset.state} • {asset.substance}
-                    </p>
-                    <div className="h-px bg-primary/30 mb-10" />
-
-                    {/* First two sections */}
-                    {(toc && toc.length > 0
-                      ? toc.slice(0, 2)
-                      : ["Overview", "Purpose & Scope"]
-                    ).map((heading, i) => {
-                      const paragraphs = (asset.description || "")
-                        .split(/\n\n+/)
-                        .filter(Boolean);
-                      const para =
-                        paragraphs[i] ||
-                        paragraphs[0] ||
-                        "This document provides comprehensive guidance covering all required elements for compliance, including detailed protocols, procedures, and best-practice frameworks tailored for your jurisdiction.";
-                      return (
-                        <section key={i} className="mb-10">
-                          <h2
-                            className="text-xl md:text-2xl font-semibold mb-4 text-primary"
-                            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-                          >
-                            {String(i + 1).padStart(2, "0")}. {heading}
-                          </h2>
-                          <p
-                            className="text-[15px] leading-[1.8] text-foreground/90"
-                            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-                          >
-                            {para}
-                          </p>
-                        </section>
-                      );
-                    })}
-
-                    {/* Teaser content that gets faded */}
-                    {toc && toc.length > 2 && (
-                      <section className="mb-10 opacity-90">
-                        <h2
-                          className="text-xl md:text-2xl font-semibold mb-4 text-primary"
-                          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-                        >
-                          03. {toc[2]}
-                        </h2>
-                        <p
-                          className="text-[15px] leading-[1.8] text-foreground/90"
-                          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-                        >
-                          {(asset.description || "").slice(0, 400)}
-                          {asset.description && asset.description.length > 400 ? "…" : ""}
-                        </p>
-                      </section>
+                  <div className="mx-auto max-w-[720px] py-8 px-4 flex flex-col items-center gap-6">
+                    {previewLoading && (
+                      <div className="w-full space-y-4">
+                        <Skeleton className="w-full aspect-[8.5/11]" />
+                        <Skeleton className="w-full aspect-[8.5/11]" />
+                      </div>
                     )}
-
-                    {/* Bottom padding so fade has room */}
-                    <div className="h-64" />
+                    {!previewLoading && previewData?.preview_pages?.length ? (
+                      previewData.preview_pages.map((url, i) => (
+                        <img
+                          key={url}
+                          src={url}
+                          alt={`${asset.title} preview page ${i + 1}`}
+                          loading="lazy"
+                          className="w-full max-w-[680px] shadow-lg border border-border bg-white"
+                        />
+                      ))
+                    ) : !previewLoading ? (
+                      <div className="text-center py-20 px-6">
+                        <p className="font-sans text-sm text-muted-foreground">
+                          Preview not available for this document.
+                        </p>
+                      </div>
+                    ) : null}
+                    <div className="h-48" />
                   </div>
                 </div>
 

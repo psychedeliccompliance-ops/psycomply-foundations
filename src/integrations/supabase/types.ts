@@ -27,6 +27,7 @@ export type Database = {
           id: string
           is_active: boolean
           is_bundle: boolean
+          preview_pages: string[] | null
           price: number
           slug: string
           state: string
@@ -49,6 +50,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           is_bundle?: boolean
+          preview_pages?: string[] | null
           price: number
           slug: string
           state: string
@@ -71,6 +73,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           is_bundle?: boolean
+          preview_pages?: string[] | null
           price?: number
           slug?: string
           state?: string
