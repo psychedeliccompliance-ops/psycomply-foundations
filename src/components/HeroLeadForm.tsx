@@ -128,6 +128,19 @@ const HeroLeadForm = () => {
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
               <div className="relative">
+                <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="pl-10 h-12 font-sans"
+                  maxLength={100}
+                  required
+                />
+              </div>
+
+              <div className="relative">
                 <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   type="email"
@@ -138,6 +151,22 @@ const HeroLeadForm = () => {
                   maxLength={255}
                   required
                 />
+              </div>
+
+              <div className="relative">
+                <Briefcase size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground z-10 pointer-events-none" />
+                <Select value={practiceType} onValueChange={setPracticeType}>
+                  <SelectTrigger className="pl-10 h-12 font-sans">
+                    <SelectValue placeholder="Type of practice" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PRACTICE_TYPES.map((p) => (
+                      <SelectItem key={p} value={p}>
+                        {p}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="relative">
