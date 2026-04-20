@@ -99,8 +99,8 @@ const HeroLeadForm = () => {
       className="relative"
     >
       {/* Decorative gold accent */}
-      <div className="absolute -top-6 -left-6 w-24 h-24 rounded-full bg-gold/20 blur-2xl" aria-hidden />
-      <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-primary/15 blur-3xl" aria-hidden />
+      <div className="pointer-events-none absolute -top-6 -left-6 w-24 h-24 rounded-full bg-gold/20 blur-2xl" aria-hidden />
+      <div className="pointer-events-none absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-primary/15 blur-3xl" aria-hidden />
 
       <div className="relative bg-card border border-border rounded-2xl shadow-xl p-8 lg:p-10">
         <div className="absolute -top-4 left-8 inline-flex items-center gap-2 bg-gold text-gold-foreground font-sans text-xs font-semibold px-3 py-1.5 rounded-full">
