@@ -186,28 +186,54 @@ const AssetDetail = () => {
                             className="w-full max-w-[680px] shadow-lg border border-border bg-white"
                           />
                         ))}
-                        {/* Blurred locked pages after the real preview */}
-                        {previewData.preview_pages.length > 0 &&
-                          [0, 1, 2].map((i) => {
-                            const lastUrl =
-                              previewData.preview_pages[previewData.preview_pages.length - 1];
-                            return (
-                              <div
-                                key={`locked-${i}`}
-                                aria-hidden
-                                className="relative w-full max-w-[680px] shadow-lg border border-border bg-white overflow-hidden"
-                              >
-                                <img
-                                  src={lastUrl}
-                                  alt=""
-                                  loading="lazy"
-                                  className="w-full select-none pointer-events-none"
-                                  style={{ filter: "blur(14px)", transform: "scale(1.03)" }}
-                                />
-                                <div className="absolute inset-0 bg-[hsl(var(--cream))]/30" />
+                        {/* Blurred locked pages (full-page lorem text) after the real preview */}
+                        {[0, 1, 2].map((i) => (
+                          <div
+                            key={`locked-${i}`}
+                            aria-hidden
+                            className="relative w-full max-w-[680px] aspect-[8.5/11] shadow-lg border border-border bg-white overflow-hidden"
+                          >
+                            <div
+                              className="absolute inset-0 p-10 select-none pointer-events-none text-foreground"
+                              style={{ filter: "blur(6px)" }}
+                            >
+                              <div className="font-serif text-lg font-semibold mb-4">
+                                Section {i + 3}. Continued Provisions
                               </div>
-                            );
-                          })}
+                              <p className="font-sans text-[13px] leading-[1.7] mb-3 text-justify">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                velit esse cillum dolore eu fugiat nulla pariatur.
+                              </p>
+                              <p className="font-sans text-[13px] leading-[1.7] mb-3 text-justify">
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                                officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt
+                                lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo
+                                pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin
+                                mauris.
+                              </p>
+                              <p className="font-sans text-[13px] leading-[1.7] mb-3 text-justify">
+                                Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus
+                                vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut
+                                ullamcorper, ligula eu tempor congue, eros est euismod turpis, id
+                                tincidunt sapien risus a quam.
+                              </p>
+                              <p className="font-sans text-[13px] leading-[1.7] mb-3 text-justify">
+                                Maecenas fermentum consequat mi. Donec fermentum. Pellentesque
+                                malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat
+                                quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl
+                                adipiscing sapien.
+                              </p>
+                              <p className="font-sans text-[13px] leading-[1.7] text-justify">
+                                Nullam tristique diam non turpis. Cras placerat accumsan nulla. Nullam
+                                rutrum. Nam vestibulum accumsan nisl. Vivamus quis tellus vel quam
+                                varius bibendum. Fusce est. Vivamus a tellus.
+                              </p>
+                            </div>
+                          </div>
+                        ))}
                       </>
                     ) : !previewLoading ? (
                       <div className="text-center py-20 px-6">
