@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { services } from "@/data/siteData";
 import { toast } from "@/hooks/use-toast";
+import { getStateOutline } from "@/data/stateOutlines";
 
 const StatePage = () => {
   const { slug } = useParams();
@@ -87,18 +88,25 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
   return (
     <main className="pb-16 md:pb-0">
       {/* Hero */}
-      <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground">
-        <div className="container-wide max-w-3xl">
-          <Link to="/states" className="font-sans text-sm text-primary-foreground/70 hover:text-primary-foreground flex items-center gap-1 mb-6">
-            <ArrowLeft size={14} /> All states
-          </Link>
-          <h1 className="heading-1">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
-          <p className="mt-4 body-lg text-primary-foreground/80">
-            Everything you need to launch and operate a compliant psychedelic practice in {state.name}.
-          </p>
-          <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans mt-8 px-10">
-            <Link to="/book">Book a Free Call</Link>
-          </Button>
+      <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground relative overflow-hidden">
+        <div className="container-wide grid md:grid-cols-3 gap-10 items-center relative">
+          <div className="md:col-span-2">
+            <Link to="/states" className="font-sans text-sm text-primary-foreground/70 hover:text-primary-foreground flex items-center gap-1 mb-6">
+              <ArrowLeft size={14} /> All states
+            </Link>
+            <h1 className="heading-1">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
+            <p className="mt-4 body-lg text-primary-foreground/80">
+              Everything you need to launch and operate a compliant psychedelic practice in {state.name}.
+            </p>
+            <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans mt-8 px-10">
+              <Link to="/book">Book a Free Call</Link>
+            </Button>
+          </div>
+          <div className="hidden md:flex items-center justify-center opacity-90">
+            <svg viewBox="0 0 215 250" className="w-full max-w-[220px] h-auto" aria-hidden="true">
+              <path d={getStateOutline(state.slug)} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" className="text-primary-foreground" />
+            </svg>
+          </div>
         </div>
       </section>
 
@@ -233,22 +241,29 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
   return (
     <main className="pb-16 md:pb-0">
       {/* Hero */}
-      <section className="section-padding py-16 md:py-24">
-        <div className="container-wide max-w-3xl">
-          <Link to="/states" className="font-sans text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 mb-6">
-            <ArrowLeft size={14} /> All states
-          </Link>
-          <h1 className="heading-1 text-foreground">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
-          <p className="mt-2 body-lg text-gold font-sans font-medium">Coming Soon</p>
-          {state.substances.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-4">
-              {state.substances.map((sub) => (
-                <span key={sub} className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">
-                  {sub}
-                </span>
-              ))}
-            </div>
-          )}
+      <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground">
+        <div className="container-wide grid md:grid-cols-3 gap-10 items-center">
+          <div className="md:col-span-2">
+            <Link to="/states" className="font-sans text-sm text-primary-foreground/70 hover:text-primary-foreground flex items-center gap-1 mb-6">
+              <ArrowLeft size={14} /> All states
+            </Link>
+            <h1 className="heading-1">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
+            <p className="mt-2 body-lg text-gold font-sans font-medium">Coming Soon</p>
+            {state.substances.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-4">
+                {state.substances.map((sub) => (
+                  <span key={sub} className="text-xs font-sans font-medium bg-primary-foreground/15 text-primary-foreground px-2 py-1 rounded">
+                    {sub}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="hidden md:flex items-center justify-center opacity-90">
+            <svg viewBox="0 0 215 250" className="w-full max-w-[220px] h-auto" aria-hidden="true">
+              <path d={getStateOutline(slug)} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" className="text-primary-foreground" />
+            </svg>
+          </div>
         </div>
       </section>
 

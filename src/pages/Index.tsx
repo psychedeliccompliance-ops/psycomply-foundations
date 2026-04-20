@@ -64,15 +64,30 @@ const Index = () => {
       <section className="section-padding relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-cream-dark opacity-80" />
         <div className="container-wide relative py-20 md:py-28 lg:py-32">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
             <motion.div
               initial="hidden"
               animate="visible"
-              className="lg:col-span-7">
-
-              <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">You heal.<br />We do paperwork.</motion.h1>
-              <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">PsyComply covers the full operational and legal foundation of your psychedelic practice — from day one.
+              className="lg:col-span-7"
+            >
+              <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">
+                You heal.<br />We do paperwork.
+              </motion.h1>
+              <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">
+                PsyComply covers the full operational and legal foundation of your psychedelic practice — from day one.
               </motion.p>
+            </motion.div>
+
+            {/* Form: appears here on mobile (directly beneath hero text), and in right column on desktop */}
+            <div className="mt-10 lg:mt-0 lg:col-span-5 lg:row-span-2 lg:order-last">
+              <HeroLeadForm />
+            </div>
+
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              className="lg:col-span-7"
+            >
               <motion.div variants={fadeUp} custom={2} className="mt-10 flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
                   <Link to="/book">Book a Free Discovery Call</Link>
@@ -82,9 +97,6 @@ const Index = () => {
                 </Button>
               </motion.div>
             </motion.div>
-            <div className="lg:col-span-5">
-              <HeroLeadForm />
-            </div>
           </div>
           <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl hidden lg:block" />
         </div>
@@ -125,17 +137,17 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-            { icon: <Scale size={24} />, label: "Legal Compliance" },
-            { icon: <Heart size={24} />, label: "Clinical Protocols" },
-            { icon: <Lock size={24} />, label: "Substance Management" },
-            { icon: <Users size={24} />, label: "Staff & HR" },
-            { icon: <Building2 size={24} />, label: "Business Operations" },
-            { icon: <Megaphone size={24} />, label: "Marketing Compliance" }].
+            { icon: <Scale size={24} />, label: "Legal Compliance", href: "/services/legal-compliance" },
+            { icon: <Heart size={24} />, label: "Clinical Protocols", href: "/services/clinical-operations" },
+            { icon: <Lock size={24} />, label: "Substance Management", href: "/services/controlled-substance-management" },
+            { icon: <Users size={24} />, label: "Staff & HR", href: "/services/staff-hr-compliance" },
+            { icon: <Building2 size={24} />, label: "Business Operations", href: "/services/business-administration" },
+            { icon: <Megaphone size={24} />, label: "Marketing Compliance", href: "/services/marketing-branding-compliance" }].
             map((item, i) =>
-            <div key={i} className="bg-card border border-border rounded-lg p-5 flex flex-col items-center text-center gap-3">
+            <Link key={i} to={item.href} className="bg-card border border-border rounded-lg p-5 flex flex-col items-center text-center gap-3 hover:border-primary/40 hover:shadow-md transition-all">
                 <div className="text-primary">{item.icon}</div>
                 <span className="font-sans text-sm font-medium text-foreground">{item.label}</span>
-              </div>
+              </Link>
             )}
           </div>
         </div>
@@ -378,29 +390,10 @@ const Index = () => {
                 <Star size={20} className="text-gold mb-4" />
                 <p className="body-base text-foreground italic mb-6">{t.quote}</p>
                 <div>
-                  <p className="font-sans text-sm font-semibold text-foreground">{t.name}</p>
                   <p className="font-sans text-xs text-muted-foreground">{t.role}</p>
                 </div>
               </motion.div>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* About Teaser */}
-      <section className="section-padding section-spacing">
-        <div className="container-wide grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-          <div className="bg-muted rounded-xl aspect-[4/3] flex items-center justify-center">
-            <span className="text-muted-foreground font-sans text-sm">[Founder photo placeholder]</span>
-          </div>
-          <div>
-            <h2 className="heading-2 text-foreground mb-6">Built by someone who saw the gap</h2>
-            <p className="body-base text-muted-foreground mb-4">
-              [Placeholder] The psychedelic medicine industry is moving fast, but the compliance infrastructure hasn't kept up. PsyComply was founded to close that gap — giving practitioners and operators the tools they need to do this work safely and legally.
-            </p>
-            <Link to="/about" className="font-sans text-sm font-medium text-primary hover:text-forest-light flex items-center gap-1">
-              More about PsyComply <ArrowRight size={14} />
-            </Link>
           </div>
         </div>
       </section>
