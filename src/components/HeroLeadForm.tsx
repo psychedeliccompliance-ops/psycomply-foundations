@@ -120,7 +120,7 @@ const HeroLeadForm = () => {
         ) : (
           <>
             <h3 className="font-serif text-2xl lg:text-3xl text-foreground leading-tight">
-              Get updated on psychedelic developments in your state
+              Be In The Know: Get Psychedelic Regulation Updates For Your State
             </h3>
             <p className="mt-3 body-sm text-muted-foreground">
               Regulations move fast. We'll send you the changes that actually affect your practice — no fluff.
