@@ -20,6 +20,22 @@ const AssetDetail = () => {
     },
   });
 
+  const { data: previewData, isLoading: previewLoading } = useQuery({
+    queryKey: ["asset-preview", slug],
+    enabled: !!asset,
+    staleTime: 1000 * 60 * 60,
+    queryFn: async () => {
+      // Use cached pages if already on the asset row
+      const cached = (asset as any)?.preview_pages as string[] | null | undefined;
+      if (cached && cached.length > 0) return { preview_pages: cached };
+      const { data, error } = await supabase.functions.invoke("asset-preview", {
+        body: { slug },
+      });
+      if (error) throw error;
+      return data as { preview_pages: string[] };
+    },
+  });
+
   const { data: relatedAssets = [] } = useQuery({
     queryKey: ["related-assets", slug, asset?.category, asset?.substance],
     enabled: !!asset,
