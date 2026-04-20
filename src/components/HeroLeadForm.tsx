@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { z } from "zod";
-import { Mail, MapPin, CheckCircle2, Bell, User, Briefcase } from "lucide-react";
+import { Mail, MapPin, CheckCircle2, Bell, User, Briefcase, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -35,6 +35,7 @@ const HeroLeadForm = () => {
   const [practiceType, setPracticeType] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const { data: states = [] } = useQuery({
     queryKey: ["states-lead-form"],
@@ -126,7 +127,29 @@ const HeroLeadForm = () => {
               Regulations move fast. We'll send you the changes that actually affect your practice — no fluff.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            {!expanded && (
+              <Button
+                type="button"
+                size="lg"
+                onClick={() => setExpanded(true)}
+                className="mt-6 w-full bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base h-12 flex items-center justify-center gap-2"
+              >
+                Get state updates
+                <ChevronDown size={16} />
+              </Button>
+            )}
+
+            <AnimatePresence initial={false}>
+              {expanded && (
+                <motion.form
+                  key="lead-form"
+                  onSubmit={handleSubmit}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  className="mt-6 space-y-4 overflow-hidden"
+                >
               <div className="relative">
                 <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <Input
@@ -197,7 +220,9 @@ const HeroLeadForm = () => {
               <p className="text-xs text-muted-foreground text-center font-sans">
                 No spam. Unsubscribe anytime.
               </p>
-            </form>
+                </motion.form>
+              )}
+            </AnimatePresence>
           </>
         )}
       </div>
