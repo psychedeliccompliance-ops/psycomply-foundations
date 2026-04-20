@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { z } from "zod";
-import { Mail, MapPin, CheckCircle2, Bell } from "lucide-react";
+import { Mail, MapPin, CheckCircle2, Bell, User, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -9,15 +9,30 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
+const PRACTICE_TYPES = [
+  "Ketamine clinic",
+  "Psilocybin service center",
+  "MDMA-assisted therapy",
+  "Solo facilitator / therapist",
+  "Group practice",
+  "Investor / operator",
+  "Retreat / wellness center",
+  "Other",
+];
+
 const leadSchema = z.object({
+  first_name: z.string().trim().min(1, { message: "Enter your first name" }).max(100),
   email: z.string().trim().email({ message: "Enter a valid email address" }).max(255),
   state_slug: z.string().trim().min(1, { message: "Select your state" }).max(100),
+  practice_type: z.string().trim().min(1, { message: "Select your practice type" }).max(100),
 });
 
 const HeroLeadForm = () => {
   const { toast } = useToast();
+  const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [stateSlug, setStateSlug] = useState("");
+  const [practiceType, setPracticeType] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -35,7 +50,12 @@ const HeroLeadForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = leadSchema.safeParse({ email, state_slug: stateSlug });
+    const parsed = leadSchema.safeParse({
+      first_name: firstName,
+      email,
+      state_slug: stateSlug,
+      practice_type: practiceType,
+    });
     if (!parsed.success) {
       toast({
         title: "Check your details",
@@ -47,8 +67,10 @@ const HeroLeadForm = () => {
 
     setSubmitting(true);
     const { error } = await supabase.from("leads").insert({
+      first_name: parsed.data.first_name,
       email: parsed.data.email,
       state_slug: parsed.data.state_slug,
+      practice_type: parsed.data.practice_type,
     });
     setSubmitting(false);
 
@@ -62,8 +84,10 @@ const HeroLeadForm = () => {
     }
 
     setSuccess(true);
+    setFirstName("");
     setEmail("");
     setStateSlug("");
+    setPracticeType("");
   };
 
   return (
@@ -104,6 +128,19 @@ const HeroLeadForm = () => {
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
               <div className="relative">
+                <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="pl-10 h-12 font-sans"
+                  maxLength={100}
+                  required
+                />
+              </div>
+
+              <div className="relative">
                 <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   type="email"
@@ -114,6 +151,22 @@ const HeroLeadForm = () => {
                   maxLength={255}
                   required
                 />
+              </div>
+
+              <div className="relative">
+                <Briefcase size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground z-10 pointer-events-none" />
+                <Select value={practiceType} onValueChange={setPracticeType}>
+                  <SelectTrigger className="pl-10 h-12 font-sans">
+                    <SelectValue placeholder="Type of practice" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PRACTICE_TYPES.map((p) => (
+                      <SelectItem key={p} value={p}>
+                        {p}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="relative">
