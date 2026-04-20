@@ -176,15 +176,39 @@ const AssetDetail = () => {
                       </div>
                     )}
                     {!previewLoading && previewData?.preview_pages?.length ? (
-                      previewData.preview_pages.map((url, i) => (
-                        <img
-                          key={url}
-                          src={url}
-                          alt={`${asset.title} preview page ${i + 1}`}
-                          loading="lazy"
-                          className="w-full max-w-[680px] shadow-lg border border-border bg-white"
-                        />
-                      ))
+                      <>
+                        {previewData.preview_pages.map((url, i) => (
+                          <img
+                            key={url}
+                            src={url}
+                            alt={`${asset.title} preview page ${i + 1}`}
+                            loading="lazy"
+                            className="w-full max-w-[680px] shadow-lg border border-border bg-white"
+                          />
+                        ))}
+                        {/* Blurred locked pages after the real preview */}
+                        {previewData.preview_pages.length > 0 &&
+                          [0, 1, 2].map((i) => {
+                            const lastUrl =
+                              previewData.preview_pages[previewData.preview_pages.length - 1];
+                            return (
+                              <div
+                                key={`locked-${i}`}
+                                aria-hidden
+                                className="relative w-full max-w-[680px] shadow-lg border border-border bg-white overflow-hidden"
+                              >
+                                <img
+                                  src={lastUrl}
+                                  alt=""
+                                  loading="lazy"
+                                  className="w-full select-none pointer-events-none"
+                                  style={{ filter: "blur(14px)", transform: "scale(1.03)" }}
+                                />
+                                <div className="absolute inset-0 bg-[hsl(var(--cream))]/30" />
+                              </div>
+                            );
+                          })}
+                      </>
                     ) : !previewLoading ? (
                       <div className="text-center py-20 px-6">
                         <p className="font-sans text-sm text-muted-foreground">
