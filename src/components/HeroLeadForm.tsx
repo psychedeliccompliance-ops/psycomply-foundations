@@ -209,21 +209,30 @@ const HeroLeadForm = ({
                 </Select>
               </div>
 
-              <div className="relative">
-                <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground z-10 pointer-events-none" />
-                <Select value={stateSlug} onValueChange={setStateSlug}>
-                  <SelectTrigger className="pl-10 h-12 font-sans">
-                    <SelectValue placeholder="Select your state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {states.map((s) => (
-                      <SelectItem key={s.slug} value={s.slug}>
-                        {s.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              {stateLocked ? (
+                <div className="relative">
+                  <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground z-10 pointer-events-none" />
+                  <div className="pl-10 h-12 flex items-center font-sans text-sm text-foreground bg-muted/40 border border-border rounded-md">
+                    {defaultStateName ?? defaultStateSlug}
+                  </div>
+                </div>
+              ) : (
+                <div className="relative">
+                  <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground z-10 pointer-events-none" />
+                  <Select value={stateSlug} onValueChange={setStateSlug}>
+                    <SelectTrigger className="pl-10 h-12 font-sans">
+                      <SelectValue placeholder="Select your state" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {states.map((s) => (
+                        <SelectItem key={s.slug} value={s.slug}>
+                          {s.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
 
               <Button
                 type="submit"
