@@ -24,15 +24,16 @@ const AssetDetail = () => {
     queryKey: ["asset-preview", slug],
     enabled: !!asset,
     staleTime: 1000 * 60 * 60,
+    retry: false,
     queryFn: async () => {
       // Use cached pages if already on the asset row
       const cached = (asset as any)?.preview_pages as string[] | null | undefined;
-      if (cached && cached.length > 0) return { preview_pages: cached };
+      if (cached && cached.length > 0) return { preview_pages: cached, available: true };
       const { data, error } = await supabase.functions.invoke("asset-preview", {
         body: { slug },
       });
       if (error) throw error;
-      return data as { preview_pages: string[] };
+      return data as { preview_pages: string[]; available?: boolean; message?: string };
     },
   });
 
@@ -187,7 +188,7 @@ const AssetDetail = () => {
                     ) : !previewLoading ? (
                       <div className="text-center py-20 px-6">
                         <p className="font-sans text-sm text-muted-foreground">
-                          Preview not available for this document.
+                          {previewData?.message || "Preview not available for this document."}
                         </p>
                       </div>
                     ) : null}
