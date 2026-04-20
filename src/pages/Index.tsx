@@ -387,7 +387,11 @@ const Index = () => {
               transition={{ delay: i * 0.1 }}
               className="bg-background border border-border rounded-xl p-8">
 
-                <Star size={20} className="text-gold mb-4" />
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: 5 }).map((_, idx) => (
+                    <Star key={idx} size={20} className="text-gold fill-gold" />
+                  ))}
+                </div>
                 <p className="body-base text-foreground italic mb-6">{t.quote}</p>
                 <div>
                   <p className="font-sans text-xs text-muted-foreground">{t.role}</p>
