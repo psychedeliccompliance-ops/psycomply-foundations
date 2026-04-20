@@ -79,7 +79,7 @@ const Index = () => {
             </motion.div>
 
             {/* Form: appears here on mobile (directly beneath hero text), and in right column on desktop */}
-            <div className="mt-10 lg:mt-0 lg:col-span-5 lg:row-span-2 lg:order-last">
+            <div className="mt-10 lg:mt-0 lg:-mt-6 lg:col-span-5 lg:row-span-2 lg:order-last">
               <HeroLeadForm />
             </div>
 
