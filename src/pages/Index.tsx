@@ -134,7 +134,7 @@ const Index = () => {
       </section>
 
       {/* What is PsyComply */}
-      <section className="section-padding section-spacing">
+      <section id="what-is-psycomply" className="section-padding section-spacing">
         <div className="container-wide grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div>
             <h2 className="heading-2 text-foreground">What is PsyComply?</h2>
