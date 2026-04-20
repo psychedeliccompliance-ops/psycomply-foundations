@@ -178,14 +178,6 @@ export const substances: SubstanceInfo[] = [
     description: "Ketamine occupies a unique position in psychedelic medicine as a legal, FDA-approved substance used off-label for mental health treatment. Ketamine clinics operate across all 50 states under existing medical practice laws, but the compliance requirements are substantial and frequently misunderstood.",
   },
   {
-    slug: "mdma",
-    name: "MDMA",
-    legalStatus: "Currently Schedule I at the federal level. FDA has reviewed MDMA-assisted therapy for PTSD through breakthrough therapy designation. Regulatory status is evolving, with potential rescheduling or approval on the horizon.",
-    states: ["Federal regulatory pathway"],
-    clinicalRequirements: "MDMA-assisted therapy protocols are being developed through clinical trial frameworks. When regulatory approval comes, practitioners will need training programs, clinical protocols, and compliance infrastructure specific to MDMA's pharmacological profile and therapeutic approach.",
-    description: "MDMA-assisted therapy represents one of the most promising frontiers in psychedelic medicine, particularly for PTSD treatment. While FDA approval and rescheduling timelines remain in flux, smart operators are preparing their compliance infrastructure now.",
-  },
-  {
     slug: "ibogaine",
     name: "Ibogaine",
     legalStatus: "Schedule I at the federal level. Included in Colorado's Natural Medicine Health Act. Not FDA-approved for any indication. Some practitioners operate in international settings where ibogaine is legal or unscheduled.",

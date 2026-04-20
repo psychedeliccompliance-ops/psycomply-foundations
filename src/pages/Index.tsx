@@ -120,7 +120,7 @@ const Index = () => {
           <div className="container-wide flex flex-wrap justify-center gap-x-10 gap-y-3 text-sm font-sans">
             {[
             { icon: <MapPin size={16} />, text: "Oregon & Colorado Regulatory Expertise" },
-            { icon: <Leaf size={16} />, text: "Psilocybin, Ketamine & MDMA Protocols" },
+            { icon: <Leaf size={16} />, text: "Psilocybin, Ketamine & Ibogaine Protocols" },
             { icon: <Scale size={16} />, text: "Legal, Clinical, HR & Operations" },
             { icon: <CheckCircle size={16} />, text: "Built for Healers and Operators" }].
             map((item, i) =>
