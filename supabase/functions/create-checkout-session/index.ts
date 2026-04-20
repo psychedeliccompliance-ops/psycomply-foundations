@@ -47,7 +47,14 @@ serve(async (req) => {
       );
     }
 
-    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+    const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY") || "";
+    if (!stripeSecretKey) {
+      throw new Error("STRIPE_SECRET_KEY is not set");
+    }
+    console.log(
+      `[create-checkout-session] key_prefix=${stripeSecretKey.substring(0, 8)} length=${stripeSecretKey.length}`
+    );
+    const stripe = new Stripe(stripeSecretKey, {
       apiVersion: "2025-08-27.basil",
     });
 
