@@ -398,24 +398,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* About Teaser */}
-      <section className="section-padding section-spacing">
-        <div className="container-wide grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-          <div className="bg-muted rounded-xl aspect-[4/3] flex items-center justify-center">
-            <span className="text-muted-foreground font-sans text-sm">[Founder photo placeholder]</span>
-          </div>
-          <div>
-            <h2 className="heading-2 text-foreground mb-6">Built by someone who saw the gap</h2>
-            <p className="body-base text-muted-foreground mb-4">
-              [Placeholder] The psychedelic medicine industry is moving fast, but the compliance infrastructure hasn't kept up. PsyComply was founded to close that gap — giving practitioners and operators the tools they need to do this work safely and legally.
-            </p>
-            <Link to="/about" className="font-sans text-sm font-medium text-primary hover:text-forest-light flex items-center gap-1">
-              More about PsyComply <ArrowRight size={14} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Final CTA */}
       <section className="section-padding section-spacing bg-primary text-primary-foreground text-center">
         <div className="container-narrow">

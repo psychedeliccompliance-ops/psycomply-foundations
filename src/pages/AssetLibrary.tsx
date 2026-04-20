@@ -110,32 +110,44 @@ const AssetLibrary = () => {
 
       {/* Filters */}
       <section className="section-padding sticky top-16 md:top-20 z-30 bg-background/95 backdrop-blur-sm border-b border-border py-4">
-        <div className="container-wide flex flex-wrap gap-3 items-center">
-          <Select value={category} onValueChange={(v) => { setCategory(v); updateFilter("category", v); }}>
-            <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Category" /></SelectTrigger>
-            <SelectContent>
-              {categories.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-            </SelectContent>
-          </Select>
-          <Select value={stateFilter} onValueChange={(v) => { setStateFilter(v); updateFilter("state", v); }}>
-            <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="State" /></SelectTrigger>
-            <SelectContent>
-              {stateOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-            </SelectContent>
-          </Select>
-          <Select value={substanceFilter} onValueChange={(v) => { setSubstanceFilter(v); updateFilter("substance", v); }}>
-            <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="Substance" /></SelectTrigger>
-            <SelectContent>
-              {substanceOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-            </SelectContent>
-          </Select>
-          <Select value={sort} onValueChange={(v) => { setSort(v); updateFilter("sort", v); }}>
-            <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Sort" /></SelectTrigger>
-            <SelectContent>
-              {sortOptions.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
-            </SelectContent>
-          </Select>
-          <span className="font-sans text-sm text-muted-foreground ml-auto">{filteredAssets.length} results</span>
+        <div className="container-wide flex flex-wrap gap-4 items-end">
+          <div className="flex flex-col gap-1">
+            <label className="font-sans text-xs font-medium uppercase tracking-wide text-muted-foreground">By Category</label>
+            <Select value={category} onValueChange={(v) => { setCategory(v); updateFilter("category", v); }}>
+              <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Category" /></SelectTrigger>
+              <SelectContent>
+                {categories.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="font-sans text-xs font-medium uppercase tracking-wide text-muted-foreground">By State</label>
+            <Select value={stateFilter} onValueChange={(v) => { setStateFilter(v); updateFilter("state", v); }}>
+              <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="State" /></SelectTrigger>
+              <SelectContent>
+                {stateOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="font-sans text-xs font-medium uppercase tracking-wide text-muted-foreground">By Substance</label>
+            <Select value={substanceFilter} onValueChange={(v) => { setSubstanceFilter(v); updateFilter("substance", v); }}>
+              <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="Substance" /></SelectTrigger>
+              <SelectContent>
+                {substanceOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="font-sans text-xs font-medium uppercase tracking-wide text-muted-foreground">Sort</label>
+            <Select value={sort} onValueChange={(v) => { setSort(v); updateFilter("sort", v); }}>
+              <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Sort" /></SelectTrigger>
+              <SelectContent>
+                {sortOptions.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          <span className="font-sans text-sm text-muted-foreground ml-auto pb-2">{filteredAssets.length} results</span>
         </div>
       </section>
 
