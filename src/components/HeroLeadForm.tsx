@@ -155,7 +155,7 @@ const HeroLeadForm = () => {
                   }}
                   className="w-full bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base h-12 flex items-center justify-center gap-2"
                 >
-                  Continue
+                  Continue →
                   <ChevronDown size={16} />
                 </Button>
               )}
