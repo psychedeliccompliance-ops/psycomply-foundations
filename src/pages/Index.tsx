@@ -68,12 +68,12 @@ const Index = () => {
             <motion.div
               initial="hidden"
               animate="visible"
-              className="lg:col-span-7">
+              className="lg:col-span-7 order-1">
 
               <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">You heal.<br />We do paperwork.</motion.h1>
               <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">PsyComply covers the full operational and legal foundation of your psychedelic practice — from day one.
               </motion.p>
-              <motion.div variants={fadeUp} custom={2} className="mt-10 flex flex-col sm:flex-row gap-4">
+              <motion.div variants={fadeUp} custom={2} className="mt-10 flex flex-col sm:flex-row gap-4 order-3 lg:order-2">
                 <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
                   <Link to="/book">Book a Free Discovery Call</Link>
                 </Button>
@@ -82,7 +82,7 @@ const Index = () => {
                 </Button>
               </motion.div>
             </motion.div>
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 order-2 lg:order-3">
               <HeroLeadForm />
             </div>
           </div>
