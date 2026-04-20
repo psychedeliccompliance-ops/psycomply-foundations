@@ -208,9 +208,10 @@ const AssetDetail = () => {
 
                 {/* Diagonal watermark banner */}
                 <div className="pointer-events-none absolute inset-0 overflow-hidden z-10 flex items-center justify-center">
-                  <span className="font-sans font-light tracking-[0.5em] text-foreground/15 text-3xl md:text-5xl rotate-[-20deg] whitespace-nowrap">
-                    DOCUMENT PREVIEW
-                  </span>
+                  <div className="rotate-[-20deg] text-center font-sans font-light tracking-[0.4em] text-foreground/15 text-4xl md:text-6xl leading-tight">
+                    <div>DOCUMENT</div>
+                    <div>PREVIEW</div>
+                  </div>
                 </div>
 
                 {/* Fade-out gradient overlay (sticky at bottom of viewport) */}
