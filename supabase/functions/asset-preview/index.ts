@@ -9,6 +9,13 @@ const corsHeaders = {
 
 const CC_API = "https://api.cloudconvert.com/v2";
 
+function json(data: unknown, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+}
+
 async function ccFetch(path: string, apiKey: string, init?: RequestInit) {
   const res = await fetch(`${CC_API}${path}`, {
     ...init,
@@ -43,10 +50,7 @@ serve(async (req) => {
   try {
     const { slug } = await req.json();
     if (!slug || typeof slug !== "string") {
-      return new Response(JSON.stringify({ error: "slug required" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return json({ error: "slug required" }, 400);
     }
 
     const ccKey = Deno.env.get("CLOUDCONVERT_API_KEY");
@@ -68,10 +72,7 @@ serve(async (req) => {
 
     // Return cached
     if (asset.preview_pages && asset.preview_pages.length > 0) {
-      return new Response(JSON.stringify({ preview_pages: asset.preview_pages, cached: true }), {
-        status: 200,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return json({ preview_pages: asset.preview_pages, cached: true, available: true });
     }
 
     const filename = asset.filename;
@@ -100,9 +101,12 @@ serve(async (req) => {
         `[asset-preview] probe ${filename} status=${probe.status} size=${buf.length} isZip=${isZip} hex=${hex} ascii=${JSON.stringify(ascii)}`
       );
       if (!isZip) {
-        throw new Error(
-          `Stored file is not a valid DOCX (no PK zip signature). First bytes: ${hex}. Preview ASCII: ${ascii.slice(0, 80)}`
-        );
+        return json({
+          preview_pages: [],
+          available: false,
+          reason: "invalid_docx",
+          message: "This file is not stored as a valid Word document, so a page preview cannot be generated.",
+        });
       }
     } catch (probeErr) {
       const m = probeErr instanceof Error ? probeErr.message : String(probeErr);
@@ -165,16 +169,18 @@ serve(async (req) => {
       .eq("slug", slug);
     if (updErr) console.error("[asset-preview] cache update failed:", updErr.message);
 
-    return new Response(JSON.stringify({ preview_pages: uploaded, cached: false }), {
-      status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return json({ preview_pages: uploaded, cached: false, available: true });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("[asset-preview] error:", msg);
-    return new Response(JSON.stringify({ error: msg }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    if (msg.includes("OPEN_FAILED") || msg.includes("This file cannot be opened")) {
+      return json({
+        preview_pages: [],
+        available: false,
+        reason: "cloudconvert_open_failed",
+        message: "This file could not be opened as a Word document, so a page preview is unavailable.",
+      });
+    }
+    return json({ error: msg }, 500);
   }
 });
