@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { services } from "@/data/siteData";
 import { toast } from "@/hooks/use-toast";
-import { getStateOutline } from "@/data/stateOutlines";
+import HeroLeadForm from "@/components/HeroLeadForm";
 
 const StatePage = () => {
   const { slug } = useParams();
@@ -89,8 +89,8 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
     <main className="pb-16 md:pb-0">
       {/* Hero */}
       <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground relative overflow-hidden">
-        <div className="container-wide grid md:grid-cols-3 gap-10 items-center relative">
-          <div className="md:col-span-2">
+        <div className="container-wide grid md:grid-cols-2 gap-10 items-center relative">
+          <div>
             <Link to="/states" className="font-sans text-sm text-primary-foreground/70 hover:text-primary-foreground flex items-center gap-1 mb-6">
               <ArrowLeft size={14} /> All states
             </Link>
@@ -102,10 +102,14 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
               <Link to="/book">Book a Free Call</Link>
             </Button>
           </div>
-          <div className="hidden md:flex items-center justify-center opacity-90">
-            <svg viewBox="0 0 215 250" className="w-full max-w-[220px] h-auto" aria-hidden="true">
-              <path d={getStateOutline(state.slug)} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" className="text-primary-foreground" />
-            </svg>
+          <div>
+            <HeroLeadForm
+              defaultStateSlug={state.slug}
+              defaultStateName={state.name}
+              title={`Stay ahead of ${state.name} psychedelic regulation changes`}
+              subtitle={`Get notified the moment ${state.name} rules, licensing, or compliance requirements change.`}
+              badgeLabel={`${state.name} updates`}
+            />
           </div>
         </div>
       </section>
@@ -242,8 +246,8 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
     <main className="pb-16 md:pb-0">
       {/* Hero */}
       <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground">
-        <div className="container-wide grid md:grid-cols-3 gap-10 items-center">
-          <div className="md:col-span-2">
+        <div className="container-wide grid md:grid-cols-2 gap-10 items-center">
+          <div>
             <Link to="/states" className="font-sans text-sm text-primary-foreground/70 hover:text-primary-foreground flex items-center gap-1 mb-6">
               <ArrowLeft size={14} /> All states
             </Link>
@@ -259,10 +263,14 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
               </div>
             )}
           </div>
-          <div className="hidden md:flex items-center justify-center opacity-90">
-            <svg viewBox="0 0 215 250" className="w-full max-w-[220px] h-auto" aria-hidden="true">
-              <path d={getStateOutline(slug)} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" className="text-primary-foreground" />
-            </svg>
+          <div>
+            <HeroLeadForm
+              defaultStateSlug={slug}
+              defaultStateName={state.name}
+              title={`Be first to know when ${state.name} resources launch`}
+              subtitle={`We're building ${state.name}-specific compliance resources. Get notified the moment they're ready.`}
+              badgeLabel={`${state.name} updates`}
+            />
           </div>
         </div>
       </section>
