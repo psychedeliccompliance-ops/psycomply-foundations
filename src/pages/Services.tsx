@@ -15,7 +15,7 @@ const serviceIcons: Record<string, React.ReactNode> = {
 
 const Services = () => {
   return (
-    <main className="pb-16 md:pb-0">
+    <main className="pb-28 md:pb-0">
       {/* Hero */}
       <section className="section-padding py-20 md:py-28">
         <div className="container-wide max-w-3xl">
