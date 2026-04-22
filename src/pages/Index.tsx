@@ -72,10 +72,13 @@ const Index = () => {
               className="lg:col-span-7 lg:order-1"
             >
               <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">
-                You heal.<br />We do paperwork.
+                Psychedelic Consulting
               </motion.h1>
-              <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">
-                PsyComply covers the full operational and legal foundation of your psychedelic practice — from day one.
+              <motion.p variants={fadeUp} custom={1} className="mt-4 font-serif text-2xl md:text-3xl lg:text-4xl font-medium text-primary leading-tight">
+                You heal. We do the paperwork.
+              </motion.p>
+              <motion.p variants={fadeUp} custom={2} className="mt-6 body-lg text-muted-foreground max-w-2xl">
+                PsyComply handles the full operational and legal processes of your psychedelic practice, from planning to ongoing maintenance.
               </motion.p>
               {/* CTA buttons — desktop only here, so they stay grouped with text and centered as a unit */}
               <motion.div variants={fadeUp} custom={2} className="mt-10 hidden lg:flex flex-col sm:flex-row gap-4">
