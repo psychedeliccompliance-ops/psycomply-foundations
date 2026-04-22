@@ -48,7 +48,7 @@ const Header = () => {
       href: "/substances",
       children: substances.map((s) => ({ label: s.name, href: `/substances/${s.slug}` })),
     },
-    { label: "Asset Library", href: "/assets", children: [] },
+    { label: "Store", href: "/assets", children: [] },
     { label: "About", href: "/about", children: [] },
   ];
 
