@@ -61,9 +61,9 @@ const Index = () => {
   return (
     <main className="pb-28 md:pb-0">
       {/* Hero */}
-      <section className="section-padding relative overflow-hidden">
+      <section className="section-padding relative overflow-hidden min-h-[100svh] lg:min-h-0 flex items-center lg:block">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-cream-dark opacity-80" />
-        <div className="container-wide relative py-20 md:py-28 lg:py-32">
+        <div className="container-wide relative py-12 md:py-28 lg:py-32 w-full">
           <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
             {/* Headline + subtext */}
             <motion.div
