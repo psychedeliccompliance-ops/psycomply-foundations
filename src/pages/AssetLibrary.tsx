@@ -73,7 +73,7 @@ const AssetLibrary = () => {
       {/* Hero */}
       <section className="section-padding py-20 md:py-28">
         <div className="container-wide max-w-3xl">
-          <h1 className="heading-1 text-foreground">The Psychedelic Compliance Asset Library</h1>
+          <h1 className="heading-1 text-foreground">The Psychedelic Compliance Template Library</h1>
           <p className="mt-6 body-lg text-muted-foreground">
             Individual templates, SOPs, and guides — or save with a bundle. Instant download after purchase.
           </p>
