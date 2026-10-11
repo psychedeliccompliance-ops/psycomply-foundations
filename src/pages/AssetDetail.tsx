@@ -20,23 +20,6 @@ const AssetDetail = () => {
     },
   });
 
-  const { data: previewData, isLoading: previewLoading } = useQuery({
-    queryKey: ["asset-preview", slug],
-    enabled: !!asset,
-    staleTime: 1000 * 60 * 60,
-    retry: false,
-    queryFn: async () => {
-      // Use cached pages if already on the asset row
-      const cached = (asset as any)?.preview_pages as string[] | null | undefined;
-      if (cached && cached.length > 0) return { preview_pages: cached, available: true };
-      const { data, error } = await supabase.functions.invoke("asset-preview", {
-        body: { slug },
-      });
-      if (error) throw error;
-      return data as { preview_pages: string[]; available?: boolean; message?: string };
-    },
-  });
-
   const { data: relatedAssets = [] } = useQuery({
     queryKey: ["related-assets", slug, asset?.category, asset?.substance],
     enabled: !!asset,
@@ -101,7 +84,7 @@ const AssetDetail = () => {
   const descriptionPreview = asset.description?.slice(0, 300) || "";
 
   return (
-    <main className="pb-28 md:pb-0">
+    <main className="pb-16 md:pb-0">
       <section className="section-padding py-16 md:py-24">
         <div className="container-wide max-w-4xl">
           <Link to="/assets" className="font-sans text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 mb-6">
@@ -161,79 +144,24 @@ const AssetDetail = () => {
                 </div>
               )}
 
-              {/* Document preview */}
-              <div className="relative mb-8 rounded-xl overflow-hidden shadow-2xl border border-border">
-                {/* Scrollable document page */}
-                <div
-                  className="relative h-[640px] overflow-y-auto bg-[hsl(var(--cream))]"
-                  style={{ scrollbarGutter: "stable" }}
-                >
-                  <div className="mx-auto max-w-[720px] py-8 px-4 flex flex-col items-center gap-6">
-                    {previewLoading && (
-                      <div className="w-full space-y-4">
-                        <Skeleton className="w-full aspect-[8.5/11]" />
-                        <Skeleton className="w-full aspect-[8.5/11]" />
-                      </div>
-                    )}
-                    {!previewLoading && previewData?.preview_pages?.length ? (
-                      <>
-                        {previewData.preview_pages.map((url, i) => {
-                          const locked = i >= 2;
-                          return (
-                            <div
-                              key={url}
-                              className="relative w-full max-w-[680px] shadow-lg border border-border bg-white overflow-hidden"
-                            >
-                              <img
-                                src={url}
-                                alt={`${asset.title} preview page ${i + 1}`}
-                                loading="lazy"
-                                className={`w-full ${locked ? "select-none pointer-events-none" : ""}`}
-                                style={locked ? { filter: "blur(7px)" } : undefined}
-                              />
-                            </div>
-                          );
-                        })}
-                      </>
-                    ) : !previewLoading ? (
-                      <div className="text-center py-20 px-6">
-                        <p className="font-sans text-sm text-muted-foreground">
-                          {previewData?.message || "Preview not available for this document."}
-                        </p>
-                      </div>
-                    ) : null}
-                    <div className="h-48" />
-                  </div>
+              {/* Blurred preview */}
+              <div className="relative mb-8">
+                <div className="bg-card border border-border rounded-xl p-8">
+                  <p className="body-base text-muted-foreground leading-relaxed blur-[3px] select-none">
+                    {descriptionPreview}
+                    {asset.description && asset.description.length > 300 ? "…" : ""}
+                  </p>
                 </div>
-
-                {/* Diagonal watermark banner */}
-                <div className="pointer-events-none absolute inset-0 overflow-hidden z-10 flex items-center justify-center">
-                  <div className="rotate-[-20deg] text-center font-sans font-light tracking-[0.4em] text-foreground/15 text-4xl md:text-6xl leading-tight">
-                    <div>DOCUMENT</div>
-                    <div>PREVIEW</div>
-                  </div>
-                </div>
-
-                {/* Fade-out gradient overlay (sticky at bottom of viewport) */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-[hsl(var(--cream))]/85 to-[hsl(var(--cream))]" />
-
-                {/* Unlock CTA overlay */}
-                <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end pb-8 px-6">
-                  <div className="bg-card/95 backdrop-blur-sm border border-border rounded-xl shadow-lg px-6 py-5 text-center max-w-sm w-full">
-                    <p className="font-sans font-semibold text-foreground mb-3">
-                      Purchase to unlock the full document
-                    </p>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/60 to-card rounded-xl flex items-end justify-center pb-8">
+                  <div className="text-center">
+                    <p className="font-sans font-semibold text-foreground mb-3">Buy to unlock full document</p>
                     <Button
                       onClick={handleBuyNow}
                       disabled={isCheckingOut}
-                      className="w-full bg-gold text-gold-foreground hover:bg-gold-hover font-sans"
+                      className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans"
                     >
-                      {isCheckingOut ? (
-                        <Loader2 size={16} className="mr-2 animate-spin" />
-                      ) : (
-                        <ShoppingCart size={16} className="mr-2" />
-                      )}
-                      Buy Now — ${asset.price}
+                      {isCheckingOut ? <Loader2 size={16} className="mr-2 animate-spin" /> : <ShoppingCart size={16} className="mr-2" />}
+                      Unlock Now — ${asset.price}
                     </Button>
                   </div>
                 </div>

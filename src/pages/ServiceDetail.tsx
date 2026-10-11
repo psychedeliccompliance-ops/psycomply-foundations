@@ -28,7 +28,7 @@ const ServiceDetail = () => {
   }
 
   return (
-    <main className="pb-28 md:pb-0">
+    <main className="pb-16 md:pb-0">
       {/* Hero */}
       <section className="section-padding py-16 md:py-24">
         <div className="container-wide max-w-3xl">
@@ -67,9 +67,7 @@ const ServiceDetail = () => {
                 <p className="body-base text-foreground mb-4">{tier.description}</p>
                 <p className="font-sans text-xl font-semibold text-foreground mb-6">{tier.price}</p>
                 <Button asChild className="w-full bg-gold text-gold-foreground hover:bg-gold-hover font-sans">
-                  <Link to={tier.name === "DIY" ? "/assets" : "/book"}>
-                    {tier.name === "DIY" ? "Browse templates" : "Get started"}
-                  </Link>
+                  <Link to="/book">Get started</Link>
                 </Button>
               </div>
             ))}
@@ -95,13 +93,6 @@ const ServiceDetail = () => {
                 <span className="font-sans font-semibold text-foreground">${asset.price}</span>
               </Link>
             ))}
-          </div>
-          <div className="mt-10 text-center">
-            <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans px-10">
-              <Link to={`/assets?category=${encodeURIComponent(service.title)}`}>
-                See all {service.title} assets <ArrowRight size={16} className="ml-2" />
-              </Link>
-            </Button>
           </div>
         </div>
       </section>

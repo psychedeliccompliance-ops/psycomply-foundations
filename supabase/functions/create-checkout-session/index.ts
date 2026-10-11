@@ -29,7 +29,7 @@ serve(async (req) => {
 
     const { data: asset, error: dbError } = await supabaseClient
       .from("assets")
-      .select("stripe_price_id, title, slug, filename")
+      .select("stripe_price_id, title, slug")
       .eq("slug", slug)
       .maybeSingle();
 
@@ -47,14 +47,7 @@ serve(async (req) => {
       );
     }
 
-    const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY") || "";
-    if (!stripeSecretKey) {
-      throw new Error("STRIPE_SECRET_KEY is not set");
-    }
-    console.log(
-      `[create-checkout-session] key_prefix=${stripeSecretKey.substring(0, 8)} length=${stripeSecretKey.length}`
-    );
-    const stripe = new Stripe(stripeSecretKey, {
+    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
     });
 
@@ -63,7 +56,7 @@ serve(async (req) => {
       mode: "payment",
       success_url: `https://psychedeliccompliance.com/download?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://psychedeliccompliance.com/assets`,
-      metadata: { slug, filename: asset.filename ?? "" },
+      metadata: { slug },
     });
 
     return new Response(JSON.stringify({ url: session.url }), {

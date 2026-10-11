@@ -6,7 +6,6 @@ import { services, testimonials } from "@/data/siteData";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
-import HeroLeadForm from "@/components/HeroLeadForm";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -59,61 +58,30 @@ const Index = () => {
   const comingSoonStates = states.filter((s) => !s.active);
 
   return (
-    <main className="pb-28 md:pb-0">
+    <main className="pb-16 md:pb-0">
       {/* Hero */}
-      <section className="section-padding relative overflow-hidden min-h-[100svh] lg:min-h-0 flex items-center lg:block">
+      <section className="section-padding relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-cream-dark opacity-80" />
-        <div className="container-wide relative py-12 md:py-28 lg:py-32 w-full">
-          <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
-            {/* Headline + subtext */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              className="lg:col-span-7 lg:order-1"
-            >
-              <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">
-                Psychedelic Consulting
-              </motion.h1>
-              <motion.p variants={fadeUp} custom={1} className="mt-4 font-serif text-2xl md:text-3xl lg:text-4xl font-medium text-primary leading-tight">
-                You heal. We do the paperwork.
-              </motion.p>
-              <motion.p variants={fadeUp} custom={2} className="mt-6 body-lg text-muted-foreground max-w-2xl">
-                PsyComply handles the full operational and legal processes of your psychedelic practice, from planning to ongoing maintenance.
-              </motion.p>
-              {/* CTA buttons — desktop only here, so they stay grouped with text and centered as a unit */}
-              <motion.div variants={fadeUp} custom={2} className="mt-10 hidden lg:flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
-                  <Link to="/book">Book a Free Discovery Call</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="font-sans text-base px-8 border-foreground/20 hover:bg-foreground/5">
-                  <Link to="/assets">Browse the Asset Library</Link>
-                </Button>
-              </motion.div>
+        <div className="container-wide relative py-20 md:py-32 lg:py-40">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            className="max-w-3xl">
 
-              {/* CTA buttons — mobile only, directly under hero text, before the form */}
-              <div className="mt-8 flex flex-col sm:flex-row gap-4 lg:hidden">
-                <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
-                  <Link to="/book">Book a Free Discovery Call</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="font-sans text-base px-8 border-foreground/20 hover:bg-foreground/5">
-                  <Link to="/assets">Browse the Asset Library</Link>
-                </Button>
-              </div>
+            <motion.h1 variants={fadeUp} custom={0} className="heading-1 text-foreground">You heal.<br />We do paperwork.</motion.h1>
+            <motion.p variants={fadeUp} custom={1} className="mt-6 body-lg text-muted-foreground max-w-2xl">PsyComply covers the full operational and legal foundation of your psychedelic practice — from day one.
+
+            </motion.p>
+            <motion.div variants={fadeUp} custom={2} className="mt-10 flex flex-col sm:flex-row gap-4">
+              <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans text-base px-8">
+                <Link to="/book">Book a Free Discovery Call</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="font-sans text-base px-8 border-foreground/20 hover:bg-foreground/5">
+                <Link to="/assets">Browse the Asset Library</Link>
+              </Button>
             </motion.div>
-
-            {/* Form — desktop right column only */}
-            <div className="hidden lg:block lg:col-span-5 lg:order-2">
-              <HeroLeadForm />
-            </div>
-          </div>
+          </motion.div>
           <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl hidden lg:block" />
-        </div>
-      </section>
-
-      {/* Mobile-only standalone form section (below hero CTAs) */}
-      <section className="lg:hidden section-padding pb-12 -mt-4">
-        <div className="container-wide">
-          <HeroLeadForm />
         </div>
       </section>
 
@@ -123,7 +91,7 @@ const Index = () => {
           <div className="container-wide flex flex-wrap justify-center gap-x-10 gap-y-3 text-sm font-sans">
             {[
             { icon: <MapPin size={16} />, text: "Oregon & Colorado Regulatory Expertise" },
-            { icon: <Leaf size={16} />, text: "Psilocybin, Ketamine & Ibogaine Protocols" },
+            { icon: <Leaf size={16} />, text: "Psilocybin, Ketamine & MDMA Protocols" },
             { icon: <Scale size={16} />, text: "Legal, Clinical, HR & Operations" },
             { icon: <CheckCircle size={16} />, text: "Built for Healers and Operators" }].
             map((item, i) =>
@@ -137,7 +105,7 @@ const Index = () => {
       </section>
 
       {/* What is PsyComply */}
-      <section id="what-is-psycomply" className="section-padding section-spacing">
+      <section className="section-padding section-spacing">
         <div className="container-wide grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div>
             <h2 className="heading-2 text-foreground">What is PsyComply?</h2>
@@ -152,17 +120,17 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-            { icon: <Scale size={24} />, label: "Legal Compliance", href: "/services/legal-compliance" },
-            { icon: <Heart size={24} />, label: "Clinical Protocols", href: "/services/clinical-operations" },
-            { icon: <Lock size={24} />, label: "Substance Management", href: "/services/controlled-substance-management" },
-            { icon: <Users size={24} />, label: "Staff & HR", href: "/services/staff-hr-compliance" },
-            { icon: <Building2 size={24} />, label: "Business Operations", href: "/services/business-administration" },
-            { icon: <Megaphone size={24} />, label: "Marketing Compliance", href: "/services/marketing-branding-compliance" }].
+            { icon: <Scale size={24} />, label: "Legal Compliance" },
+            { icon: <Heart size={24} />, label: "Clinical Protocols" },
+            { icon: <Lock size={24} />, label: "Substance Management" },
+            { icon: <Users size={24} />, label: "Staff & HR" },
+            { icon: <Building2 size={24} />, label: "Business Operations" },
+            { icon: <Megaphone size={24} />, label: "Marketing Compliance" }].
             map((item, i) =>
-            <Link key={i} to={item.href} className="bg-card border border-border rounded-lg p-5 flex flex-col items-center text-center gap-3 hover:border-primary/40 hover:shadow-md transition-all">
+            <div key={i} className="bg-card border border-border rounded-lg p-5 flex flex-col items-center text-center gap-3">
                 <div className="text-primary">{item.icon}</div>
                 <span className="font-sans text-sm font-medium text-foreground">{item.label}</span>
-              </Link>
+              </div>
             )}
           </div>
         </div>
@@ -290,17 +258,16 @@ const Index = () => {
       <section className="section-padding section-spacing">
         <div className="container-wide">
           <h2 className="heading-2 text-foreground text-center mb-12">Built around the substance you work with</h2>
-          <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {substances.map((substance, i) =>
             <motion.div
               key={substance.slug}
-              className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}>
 
-                 <Link
+                <Link
                 to={`/substances/${substance.slug}`}
                 className="block bg-card border border-border rounded-xl p-7 text-center hover:border-primary/30 hover:shadow-md transition-all h-full">
 
@@ -403,17 +370,32 @@ const Index = () => {
               transition={{ delay: i * 0.1 }}
               className="bg-background border border-border rounded-xl p-8">
 
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: 5 }).map((_, idx) => (
-                    <Star key={idx} size={20} className="text-gold fill-gold" />
-                  ))}
-                </div>
+                <Star size={20} className="text-gold mb-4" />
                 <p className="body-base text-foreground italic mb-6">{t.quote}</p>
                 <div>
+                  <p className="font-sans text-sm font-semibold text-foreground">{t.name}</p>
                   <p className="font-sans text-xs text-muted-foreground">{t.role}</p>
                 </div>
               </motion.div>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* About Teaser */}
+      <section className="section-padding section-spacing">
+        <div className="container-wide grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+          <div className="bg-muted rounded-xl aspect-[4/3] flex items-center justify-center">
+            <span className="text-muted-foreground font-sans text-sm">[Founder photo placeholder]</span>
+          </div>
+          <div>
+            <h2 className="heading-2 text-foreground mb-6">Built by someone who saw the gap</h2>
+            <p className="body-base text-muted-foreground mb-4">
+              [Placeholder] The psychedelic medicine industry is moving fast, but the compliance infrastructure hasn't kept up. PsyComply was founded to close that gap — giving practitioners and operators the tools they need to do this work safely and legally.
+            </p>
+            <Link to="/about" className="font-sans text-sm font-medium text-primary hover:text-forest-light flex items-center gap-1">
+              More about PsyComply <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </section>

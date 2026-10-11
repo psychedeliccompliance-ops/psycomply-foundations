@@ -8,7 +8,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { services } from "@/data/siteData";
 import { toast } from "@/hooks/use-toast";
-import HeroLeadForm from "@/components/HeroLeadForm";
 
 const StatePage = () => {
   const { slug } = useParams();
@@ -86,31 +85,20 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
   );
 
   return (
-    <main className="pb-28 md:pb-0">
+    <main className="pb-16 md:pb-0">
       {/* Hero */}
-      <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground relative overflow-hidden">
-        <div className="container-wide grid md:grid-cols-2 gap-10 items-center relative">
-          <div>
-            <Link to="/states" className="font-sans text-sm text-primary-foreground/70 hover:text-primary-foreground flex items-center gap-1 mb-6">
-              <ArrowLeft size={14} /> All states
-            </Link>
-            <h1 className="heading-1">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
-            <p className="mt-4 body-lg text-primary-foreground/80">
-              Everything you need to launch and operate a compliant psychedelic practice in {state.name}.
-            </p>
-            <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans mt-8 px-10">
-              <Link to="/book">Book a Free Call</Link>
-            </Button>
-          </div>
-          <div className="w-full max-w-md md:ml-auto">
-            <HeroLeadForm
-              defaultStateSlug={state.slug}
-              defaultStateName={state.name}
-              title={`Stay ahead of ${state.name} psychedelic regulation changes`}
-              subtitle={`Get notified the moment ${state.name} rules, licensing, or compliance requirements change.`}
-              badgeLabel={`${state.name} updates`}
-            />
-          </div>
+      <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground">
+        <div className="container-wide max-w-3xl">
+          <Link to="/states" className="font-sans text-sm text-primary-foreground/70 hover:text-primary-foreground flex items-center gap-1 mb-6">
+            <ArrowLeft size={14} /> All states
+          </Link>
+          <h1 className="heading-1">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
+          <p className="mt-4 body-lg text-primary-foreground/80">
+            Everything you need to launch and operate a compliant psychedelic practice in {state.name}.
+          </p>
+          <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold-hover font-sans mt-8 px-10">
+            <Link to="/book">Book a Free Call</Link>
+          </Button>
         </div>
       </section>
 
@@ -120,12 +108,12 @@ const ActiveStatePage = ({ state }: { state: StateData }) => {
           <div className="container-wide">
             <h2 className="heading-3 text-foreground mb-3 text-center">Substances We Cover in {state.name}</h2>
             <p className="body-base text-muted-foreground mb-8 text-center">Select a substance for detailed compliance resources.</p>
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {linkedSubstances.map((sub) => (
                 <Link
                   key={sub.slug}
                   to={`/substances/${sub.slug}`}
-                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-sm"
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
                 >
                   <h3 className="font-serif text-lg font-medium text-foreground mb-2">{sub.name}</h3>
                   <p className="body-sm text-muted-foreground mb-4 line-clamp-2">{sub.legal_status?.split(".")[0]}.</p>
@@ -243,35 +231,24 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
   };
 
   return (
-    <main className="pb-28 md:pb-0">
+    <main className="pb-16 md:pb-0">
       {/* Hero */}
-      <section className="section-padding py-16 md:py-24 bg-forest text-primary-foreground">
-        <div className="container-wide grid md:grid-cols-2 gap-10 items-center">
-          <div>
-            <Link to="/states" className="font-sans text-sm text-primary-foreground/70 hover:text-primary-foreground flex items-center gap-1 mb-6">
-              <ArrowLeft size={14} /> All states
-            </Link>
-            <h1 className="heading-1">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
-            <p className="mt-2 body-lg text-gold font-sans font-medium">Coming Soon</p>
-            {state.substances.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-4">
-                {state.substances.map((sub) => (
-                  <span key={sub} className="text-xs font-sans font-medium bg-primary-foreground/15 text-primary-foreground px-2 py-1 rounded">
-                    {sub}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="w-full max-w-md md:ml-auto">
-            <HeroLeadForm
-              defaultStateSlug={slug}
-              defaultStateName={state.name}
-              title={`Be first to know when ${state.name} resources launch`}
-              subtitle={`We're building ${state.name}-specific compliance resources. Get notified the moment they're ready.`}
-              badgeLabel={`${state.name} updates`}
-            />
-          </div>
+      <section className="section-padding py-16 md:py-24">
+        <div className="container-wide max-w-3xl">
+          <Link to="/states" className="font-sans text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 mb-6">
+            <ArrowLeft size={14} /> All states
+          </Link>
+          <h1 className="heading-1 text-foreground">{state.name} Psychedelic &amp; Ketamine Compliance</h1>
+          <p className="mt-2 body-lg text-gold font-sans font-medium">Coming Soon</p>
+          {state.substances.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-4">
+              {state.substances.map((sub) => (
+                <span key={sub} className="text-xs font-sans font-medium bg-primary/10 text-primary px-2 py-1 rounded">
+                  {sub}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -281,12 +258,12 @@ const ComingSoonStatePage = ({ state, slug }: { state: StateData; slug: string }
           <div className="container-wide">
             <h2 className="heading-3 text-foreground mb-3 text-center">Substances We Cover in {state.name}</h2>
             <p className="body-base text-muted-foreground mb-8 text-center">Select a substance for detailed compliance resources.</p>
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {linkedSubstances.map((sub) => (
                 <Link
                   key={sub.slug}
                   to={`/substances/${sub.slug}`}
-                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-sm"
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
                 >
                   <h3 className="font-serif text-lg font-medium text-foreground mb-2">{sub.name}</h3>
                   <p className="body-sm text-muted-foreground mb-4 line-clamp-2">{sub.legal_status?.split(".")[0]}.</p>

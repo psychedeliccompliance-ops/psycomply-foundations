@@ -54,7 +54,7 @@ export const services: Service[] = [
     whatsIncluded: "State licensing applications and renewals. Informed consent documentation customized to your substance and jurisdiction. Regulatory filing templates and submission support. Compliance audit preparation. Legal risk assessment for your specific operational model.",
     icon: "Scale",
     tiers: [
-      { name: "DIY", description: "Purchase individual legal templates from our asset library", price: "From $99" },
+      { name: "DIY", description: "Purchase individual legal templates from our asset library", price: "From $49" },
       { name: "Done With You", description: "We guide you through the legal setup with consulting calls and document reviews", price: "From $1,500" },
       { name: "Done For You", description: "We handle every legal filing, document, and compliance requirement", price: "Custom quote" },
     ],
@@ -68,7 +68,7 @@ export const services: Service[] = [
     whatsIncluded: "Patient intake forms and screening protocols. Session documentation templates. Clinical workflow design and SOPs. Adverse event reporting procedures. Follow-up and integration session frameworks. Quality assurance systems.",
     icon: "Heart",
     tiers: [
-      { name: "DIY", description: "Clinical templates and protocol documents from our library", price: "From $99" },
+      { name: "DIY", description: "Clinical templates and protocol documents from our library", price: "From $39" },
       { name: "Done With You", description: "Consulting sessions to build your clinical operation together", price: "From $2,000" },
       { name: "Done For You", description: "We design and document your entire clinical operation", price: "Custom quote" },
     ],
@@ -82,7 +82,7 @@ export const services: Service[] = [
     whatsIncluded: "DEA registration support and compliance documentation. Inventory tracking systems and logs. Secure storage protocols and facility requirements. Chain-of-custody documentation. Waste disposal and destruction procedures. Audit preparation for substance management.",
     icon: "Lock",
     tiers: [
-      { name: "DIY", description: "Substance management templates and tracking logs", price: "From $99" },
+      { name: "DIY", description: "Substance management templates and tracking logs", price: "From $59" },
       { name: "Done With You", description: "We help you set up your substance management systems", price: "From $2,500" },
       { name: "Done For You", description: "Complete substance management infrastructure built for you", price: "Custom quote" },
     ],
@@ -96,7 +96,7 @@ export const services: Service[] = [
     whatsIncluded: "Hiring and credentialing checklists. Background check requirements by state. Staff training program design. Employee handbook templates for psychedelic businesses. Continuing education tracking. Workplace safety and incident reporting procedures.",
     icon: "Users",
     tiers: [
-      { name: "DIY", description: "HR templates, handbooks, and training checklists", price: "From $99" },
+      { name: "DIY", description: "HR templates, handbooks, and training checklists", price: "From $39" },
       { name: "Done With You", description: "We review and build your HR compliance with you", price: "From $1,200" },
       { name: "Done For You", description: "Full HR compliance setup for your organization", price: "Custom quote" },
     ],
@@ -110,7 +110,7 @@ export const services: Service[] = [
     whatsIncluded: "Business entity structuring guidance. Insurance requirements and provider recommendations. Financial record-keeping systems. Operational SOPs for daily business management. Vendor and contractor agreement templates. Business continuity and risk planning.",
     icon: "Building",
     tiers: [
-      { name: "DIY", description: "Business administration templates and guides", price: "From $99" },
+      { name: "DIY", description: "Business administration templates and guides", price: "From $49" },
       { name: "Done With You", description: "Consulting to structure and set up your business operations", price: "From $1,800" },
       { name: "Done For You", description: "Complete business administration setup", price: "Custom quote" },
     ],
@@ -124,7 +124,7 @@ export const services: Service[] = [
     whatsIncluded: "Marketing compliance guidelines for your state and substance. Advertising restriction summaries by platform. Website content compliance review. Social media policy templates. Health claims do's and don'ts. Brand messaging frameworks that stay compliant.",
     icon: "Megaphone",
     tiers: [
-      { name: "DIY", description: "Marketing compliance guides and policy templates", price: "From $99" },
+      { name: "DIY", description: "Marketing compliance guides and policy templates", price: "From $29" },
       { name: "Done With You", description: "We review your marketing materials and build guidelines together", price: "From $1,000" },
       { name: "Done For You", description: "Complete marketing compliance overhaul and ongoing review", price: "Custom quote" },
     ],
@@ -176,6 +176,14 @@ export const substances: SubstanceInfo[] = [
     states: ["All states (medical practice regulations apply)"],
     clinicalRequirements: "Ketamine clinics must comply with DEA registration, controlled substance management protocols, medical supervision requirements, and state medical board regulations. Proper informed consent, patient screening, and adverse event protocols are essential. Insurance billing, if applicable, has its own compliance layer.",
     description: "Ketamine occupies a unique position in psychedelic medicine as a legal, FDA-approved substance used off-label for mental health treatment. Ketamine clinics operate across all 50 states under existing medical practice laws, but the compliance requirements are substantial and frequently misunderstood.",
+  },
+  {
+    slug: "mdma",
+    name: "MDMA",
+    legalStatus: "Currently Schedule I at the federal level. FDA has reviewed MDMA-assisted therapy for PTSD through breakthrough therapy designation. Regulatory status is evolving, with potential rescheduling or approval on the horizon.",
+    states: ["Federal regulatory pathway"],
+    clinicalRequirements: "MDMA-assisted therapy protocols are being developed through clinical trial frameworks. When regulatory approval comes, practitioners will need training programs, clinical protocols, and compliance infrastructure specific to MDMA's pharmacological profile and therapeutic approach.",
+    description: "MDMA-assisted therapy represents one of the most promising frontiers in psychedelic medicine, particularly for PTSD treatment. While FDA approval and rescheduling timelines remain in flux, smart operators are preparing their compliance infrastructure now.",
   },
   {
     slug: "ibogaine",
@@ -286,15 +294,18 @@ export const assets: Asset[] = [
 
 export const testimonials = [
   {
-    quote: "PsyComply gave us everything we needed to open our doors with confidence. The compliance piece was the part we dreaded most, and they just handled it.",
+    quote: "[Placeholder] PsyComply gave us everything we needed to open our doors with confidence. The compliance piece was the part we dreaded most, and they just handled it.",
+    name: "[Client Name]",
     role: "Psilocybin Service Center Owner, Oregon",
   },
   {
-    quote: "We were spending so much time trying to figure out the regulatory requirements ourselves. Having someone who actually knows this space saved us months.",
+    quote: "[Placeholder] We were spending so much time trying to figure out the regulatory requirements ourselves. Having someone who actually knows this space saved us months.",
+    name: "[Client Name]",
     role: "Ketamine Clinic Director, Colorado",
   },
   {
-    quote: "The asset library alone was worth it. We bought the Oregon bundle and had our documentation foundation ready in a weekend.",
+    quote: "[Placeholder] The asset library alone was worth it. We bought the Oregon bundle and had our documentation foundation ready in a weekend.",
+    name: "[Client Name]",
     role: "Psilocybin Facilitator, Oregon",
   },
 ];

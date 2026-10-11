@@ -69,11 +69,11 @@ const AssetLibrary = () => {
   }, [assets, category, stateFilter, substanceFilter, sort]);
 
   return (
-    <main className="pb-28 md:pb-0">
+    <main className="pb-16 md:pb-0">
       {/* Hero */}
       <section className="section-padding py-20 md:py-28">
         <div className="container-wide max-w-3xl">
-          <h1 className="heading-1 text-foreground">The Psychedelic Compliance Template Library</h1>
+          <h1 className="heading-1 text-foreground">The Compliance Asset Library</h1>
           <p className="mt-6 body-lg text-muted-foreground">
             Individual templates, SOPs, and guides — or save with a bundle. Instant download after purchase.
           </p>
@@ -110,44 +110,32 @@ const AssetLibrary = () => {
 
       {/* Filters */}
       <section className="section-padding sticky top-16 md:top-20 z-30 bg-background/95 backdrop-blur-sm border-b border-border py-4">
-        <div className="container-wide flex flex-wrap gap-4 items-end">
-          <div className="flex flex-col gap-1">
-            <label className="font-sans text-xs font-semibold uppercase tracking-wider text-foreground">By Category</label>
-            <Select value={category} onValueChange={(v) => { setCategory(v); updateFilter("category", v); }}>
-              <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Category" /></SelectTrigger>
-              <SelectContent>
-                {categories.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex flex-col gap-1">
-            <label className="font-sans text-xs font-semibold uppercase tracking-wider text-foreground">By State</label>
-            <Select value={stateFilter} onValueChange={(v) => { setStateFilter(v); updateFilter("state", v); }}>
-              <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="State" /></SelectTrigger>
-              <SelectContent>
-                {stateOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex flex-col gap-1">
-            <label className="font-sans text-xs font-semibold uppercase tracking-wider text-foreground">By Substance</label>
-            <Select value={substanceFilter} onValueChange={(v) => { setSubstanceFilter(v); updateFilter("substance", v); }}>
-              <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="Substance" /></SelectTrigger>
-              <SelectContent>
-                {substanceOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex flex-col gap-1">
-            <label className="font-sans text-xs font-semibold uppercase tracking-wider text-foreground">Sort</label>
-            <Select value={sort} onValueChange={(v) => { setSort(v); updateFilter("sort", v); }}>
-              <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Sort" /></SelectTrigger>
-              <SelectContent>
-                {sortOptions.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </div>
-          <span className="font-sans text-sm text-muted-foreground ml-auto pb-2">{filteredAssets.length} results</span>
+        <div className="container-wide flex flex-wrap gap-3 items-center">
+          <Select value={category} onValueChange={(v) => { setCategory(v); updateFilter("category", v); }}>
+            <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Category" /></SelectTrigger>
+            <SelectContent>
+              {categories.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <Select value={stateFilter} onValueChange={(v) => { setStateFilter(v); updateFilter("state", v); }}>
+            <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="State" /></SelectTrigger>
+            <SelectContent>
+              {stateOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <Select value={substanceFilter} onValueChange={(v) => { setSubstanceFilter(v); updateFilter("substance", v); }}>
+            <SelectTrigger className="w-36 font-sans text-sm"><SelectValue placeholder="Substance" /></SelectTrigger>
+            <SelectContent>
+              {substanceOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <Select value={sort} onValueChange={(v) => { setSort(v); updateFilter("sort", v); }}>
+            <SelectTrigger className="w-44 font-sans text-sm"><SelectValue placeholder="Sort" /></SelectTrigger>
+            <SelectContent>
+              {sortOptions.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <span className="font-sans text-sm text-muted-foreground ml-auto">{filteredAssets.length} results</span>
         </div>
       </section>
 
