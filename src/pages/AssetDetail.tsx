@@ -4,12 +4,23 @@ import { ArrowLeft, Download, ShoppingCart, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "@/hooks/use-toast";
 
 const AssetDetail = () => {
   const { slug } = useParams();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+  // Reset the button when the browser restores this page via Back
+  useEffect(() => {
+    const reset = () => setIsCheckingOut(false);
+    window.addEventListener("pageshow", reset);
+    window.addEventListener("focus", reset);
+    return () => {
+      window.removeEventListener("pageshow", reset);
+      window.removeEventListener("focus", reset);
+    };
+  }, []);
 
   const { data: asset, isLoading } = useQuery({
     queryKey: ["asset", slug],
