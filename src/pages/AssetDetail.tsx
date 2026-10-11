@@ -45,7 +45,14 @@ const AssetDetail = () => {
       });
       if (error) throw error;
       if (data?.url) {
-        window.location.href = data.url;
+        // Stripe Checkout can't load inside an iframe (e.g. the editor preview)
+        if (window.self !== window.top) {
+          const w = window.open(data.url, "_blank");
+          if (!w) window.location.href = data.url;
+          setIsCheckingOut(false);
+        } else {
+          window.location.href = data.url;
+        }
       } else {
         throw new Error("No checkout URL returned");
       }
