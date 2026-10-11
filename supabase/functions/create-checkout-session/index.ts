@@ -54,6 +54,7 @@ serve(async (req) => {
     const session = await stripe.checkout.sessions.create({
       line_items: [{ price: asset.stripe_price_id, quantity: 1 }],
       mode: "payment",
+      payment_method_types: ["card"],
       success_url: `https://psychedeliccompliance.com/download?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://psychedeliccompliance.com/assets`,
       metadata: { slug },
